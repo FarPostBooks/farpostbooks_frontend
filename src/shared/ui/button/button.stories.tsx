@@ -16,6 +16,6 @@ export default {
 
 export const Default: Story = {
   args: {
-    text: 'Click me',
+    text: 'Кнопка',
   },
 }

@@ -13,12 +13,20 @@ git init
 pnpm install
 ```
 
-
-
 ## Gh cli (need installed gh)
 
 ```sh
 gh repo create [project-name] --[public/private] --clone --template=strwatcher/solid-fsd-template
 cd [project-name]
 pnpm install
+```
+
+# Usage
+## Run
+```sh
+pnpm dev
+```
+## Storybook
+```sh
+pnpm storybook
 ```
