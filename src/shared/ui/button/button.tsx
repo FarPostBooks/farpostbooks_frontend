@@ -5,6 +5,5 @@ export type ButtonProps = {
 }
 
 export const Button = (props: ButtonProps) => {
-  const a = 3
   return <button classList={{ [s.button]: true }}>{props.text}</button>
 }
