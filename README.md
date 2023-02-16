@@ -22,11 +22,19 @@ pnpm install
 ```
 
 # Usage
-## Run
+### Run
 ```sh
 pnpm dev
 ```
-## Storybook
+### Storybook
 ```sh
 pnpm storybook
+```
+### Lint
+```sh
+pnpm lint [path]
+```
+### Format
+```sh
+pnpm format [path]
 ```
