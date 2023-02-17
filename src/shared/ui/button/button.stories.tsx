@@ -9,4 +9,14 @@ export default {
   render: (props) => <Button {...props} />,
 } as StorybookComponent<typeof Button>
 
-export const Default: Story = { args: { text: 'Кнопка' } }
+export const Fix: Story = {
+  args: { text: 'Кнопка', filling: 'fix', width: 200 },
+}
+
+export const Fit: Story = {
+  args: { text: 'Кнопка', filling: 'fit' },
+}
+
+export const Fill: Story = {
+  args: { text: 'Кнопка', filling: 'fill' },
+}
