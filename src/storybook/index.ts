@@ -1,1 +1,2 @@
-export type { StorybookComponent } from './types'
+export type { StorybookComponent, StoryFnReturnType } from './types'
+export { FixedWidthContainer } from './wrappers'

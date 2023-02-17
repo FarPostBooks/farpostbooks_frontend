@@ -1,5 +1,5 @@
 import { StoryObj } from '@storybook/html'
-import { StorybookComponent } from '@/storybook'
+import { FixedWidthContainer, StorybookComponent, StoryFnReturnType } from '@/storybook'
 import { Image, ImageProps } from './image'
 
 type Story = StoryObj<ImageProps>
@@ -24,3 +24,12 @@ export const Filling: Story = {
     variant: 'filling',
   },
 }
+
+Filling.decorators = [
+  (Story) =>
+    (
+      <FixedWidthContainer width={500}>
+        <Story />
+      </FixedWidthContainer>
+    ) as StoryFnReturnType<ImageProps>,
+]
