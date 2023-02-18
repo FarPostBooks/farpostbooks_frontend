@@ -8,6 +8,11 @@ type Story = StoryObj<InputProps>
 export default {
   title: 'Atoms/Input',
   render: (props: InputProps) => <Input {...props} />,
+  argTypes: {
+    variant: { control: 'select', options: ['text', 'textarea'] },
+    filling: { control: 'select', options: ['fill', 'fit', 'fix'] },
+    width: { control: 'number' },
+  },
 } as StorybookComponent<typeof Input>
 
 export const InputText: Story = {
@@ -22,5 +27,16 @@ export const InputTextError: Story = {
   args: {
     ...InputText.args,
     error: 'Обязательное поле',
+  },
+}
+
+export const Textarea: Story = {
+  args: {
+    ...InputText.args,
+    variant: 'textarea',
+  },
+  argTypes: {
+    verticalFilling: { control: 'select', options: ['fill', 'fit', 'fix'] },
+    height: { control: 'number' },
   },
 }

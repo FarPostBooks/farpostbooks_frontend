@@ -1,3 +1,4 @@
+import s from './s.module.sass'
 import { PureInputProps } from './types'
 
 export const InputTextarea = (props: PureInputProps) => {
@@ -6,5 +7,17 @@ export const InputTextarea = (props: PureInputProps) => {
   ) => {
     props.onInput && props.onInput(event.target.nodeValue ?? '')
   }
-  return <textarea {...props} onInput={inputHandler} />
+  return (
+    <textarea
+      {...props}
+      classList={{
+        [s.input]: true,
+        [s.textarea]: true,
+        [s.error]: !!props.error,
+        [s[props.filling]]: true,
+        [s[`vertical-${props.verticalFilling}`]]: true,
+      }}
+      onInput={inputHandler}
+    />
+  )
 }

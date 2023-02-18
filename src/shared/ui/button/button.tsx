@@ -1,9 +1,10 @@
 import { JSX, splitProps } from 'solid-js'
+import { FillingStrategy } from '../types'
 import s from './s.module.sass'
 
 export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
   text?: string
-  filling: 'fix' | 'fill' | 'fit'
+  filling: FillingStrategy
   width?: number
 }
 
