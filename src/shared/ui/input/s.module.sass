@@ -1,0 +1,24 @@
+@import '../../styles/mixins'
+
+.input
+  @include NunitoFont
+  border-radius: 12px
+  border: 1px solid var(--border)
+  padding: 8px
+
+  &::placeholder 
+    @include NunitoFont
+    color: var(--text-secondary)
+
+  &:focus
+    outline: 1px solid var(--interactable-secondary)
+
+.inputText
+  height: 48px
+
+.error
+  border: 2px solid var(--error)
+  color: var(--error)
+
+  &::placeholder
+    color: var(--error)
