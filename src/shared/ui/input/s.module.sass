@@ -5,6 +5,8 @@
   border-radius: 12px
   border: 1px solid var(--border)
   padding: 8px
+  color: var(--text-primary)
+  filter: var(--card-shadow)
 
   &::placeholder 
     @include NunitoFont
@@ -19,6 +21,9 @@
 .error
   border: 2px solid var(--error)
   color: var(--error)
+
+  &:focus
+    outline: none
 
   &::placeholder
     color: var(--error)
