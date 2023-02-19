@@ -47,3 +47,13 @@
 
 .vertical-fix
   height: var(--height)
+
+.wrapper
+  position: relative
+  width: fit-content
+  & > *:last-child
+    position: absolute
+    top: 50%
+    right: 8px
+    transform: translate(0, -50%)
+

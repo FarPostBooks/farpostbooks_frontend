@@ -9,7 +9,7 @@ export default {
   title: 'Atoms/Input',
   render: (props: InputProps) => <Input {...props} />,
   argTypes: {
-    variant: { control: 'select', options: ['text', 'textarea'] },
+    variant: { control: 'select', options: ['text', 'textarea', 'withIcon'] },
     filling: { control: 'select', options: ['fill', 'fit', 'fix'] },
     width: { control: 'number' },
   },
@@ -38,5 +38,13 @@ export const Textarea: Story = {
   argTypes: {
     verticalFilling: { control: 'select', options: ['fill', 'fit', 'fix'] },
     height: { control: 'number' },
+  },
+}
+
+export const InputTextWithIcon: Story = {
+  args: {
+    ...InputText.args,
+    variant: 'withIcon',
+    icon: () => <img src="/Search.svg" />,
   },
 }

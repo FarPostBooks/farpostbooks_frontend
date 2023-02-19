@@ -19,7 +19,8 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["vite/client", "vite-plugin-solid-svg/types"]
     
   },
   "include": ["src"],

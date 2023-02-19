@@ -1,19 +1,20 @@
+import { Component } from 'solid-js'
 import { JSX } from 'solid-js/jsx-runtime'
 import { FillingStrategy } from '../types'
 
-export type Variant = 'text' | 'textarea'
+export type Variant = 'text' | 'textarea' | 'withIcon'
 export type VariantsMap<T> = { [key in Variant]: T }
 export type InputProps = {
   value: string
   placeholder: string
   error?: string
   onInput?: (value: string) => void
-  variant: 'text' | 'textarea'
+  variant: Variant
   filling: FillingStrategy
   verticalFilling: FillingStrategy
   width?: number
   height?: number
-
+  icon?: Component
   style: JSX.CSSProperties
 }
 export type PureInputProps = Omit<InputProps, 'variant'>
