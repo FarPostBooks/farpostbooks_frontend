@@ -1,5 +1,5 @@
 interface Window {
   TelegramLoginWidget: {
-    dataOnAuth: (data: any) => void
+    dataOnAuth: (data: never) => void
   }
 }

@@ -1,5 +1,5 @@
 import { onMount } from 'solid-js'
-import { TelegramLoginWidgetProps } from './types'
+import { TelegramLoginWidgetData, TelegramLoginWidgetProps } from './types'
 
 export const TelegramLoginWidget = (props: TelegramLoginWidgetProps) => {
   let widget: HTMLDivElement
@@ -7,7 +7,7 @@ export const TelegramLoginWidget = (props: TelegramLoginWidgetProps) => {
 
   onMount(() => {
     window.TelegramLoginWidget = {
-      dataOnAuth: (data) => props.dataOnAuth(data),
+      dataOnAuth: (data: TelegramLoginWidgetData) => props.dataOnAuth(data),
     }
 
     const script = document.createElement('script')
