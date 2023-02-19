@@ -25,6 +25,12 @@ export const Circled: Story = {
   args: {
     variant: 'circled',
     icon: () => <img src={'/Logout.svg'} />,
-    light: false,
+  },
+}
+
+export const CircledLight: Story = {
+  args: {
+    ...Circled.args,
+    light: true,
   },
 }
