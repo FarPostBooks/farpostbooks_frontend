@@ -10,13 +10,21 @@ export default {
 } as StorybookComponent<typeof Button>
 
 export const Fix: Story = {
-  args: { text: 'Кнопка', filling: 'fix', width: 200 },
+  args: { variant: 'common', text: 'Кнопка', filling: 'fix', width: 200 },
 }
 
 export const Fit: Story = {
-  args: { text: 'Кнопка', filling: 'fit' },
+  args: { variant: 'common', text: 'Кнопка', filling: 'fit' },
 }
 
 export const Fill: Story = {
-  args: { text: 'Кнопка', filling: 'fill' },
+  args: { variant: 'common', text: 'Кнопка', filling: 'fill' },
+}
+
+export const Circled: Story = {
+  args: {
+    variant: 'circled',
+    icon: () => <img src={'/Logout.svg'} />,
+    light: false,
+  },
 }

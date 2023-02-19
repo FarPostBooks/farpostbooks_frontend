@@ -1,7 +1,8 @@
 @import '../../styles/mixins'
 
-.button
+.commonButton
   @include NunitoFont
+  cursor: pointer
   background-color: var(--background)
   color: var(--interactable)
   border: 2px solid var(--interactable)
@@ -12,6 +13,19 @@
     background-color: var(--interactable)
     color: var(--background)
     border: 2px solid none
+
+.circledButton
+  cursor: pointer
+  border-radius: 50%
+  padding: 4px
+  display: flex
+  outline: none
+  border: none
+  margin: 0
+  background-color: rgba(0, 0, 0, 0)
+
+  &.light
+    background-color: var(--background)
 
 .fix
   width: var(--width)
