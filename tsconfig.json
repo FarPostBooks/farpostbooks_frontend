@@ -9,7 +9,6 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "jsxImportSource": "solid-js",
-    "types": ["vite/client"],
     "noEmit": true,
     "isolatedModules": true,
     "skipLibCheck": true,
