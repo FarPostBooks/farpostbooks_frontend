@@ -1,14 +1,14 @@
 import { StoryObj } from '@storybook/html'
 import { For } from 'solid-js'
 import { StorybookComponent } from '@/storybook'
-import { VerticalBox, VerticalBoxProps } from './vertical-box'
+import { FlexBox, FlexBoxProps } from './flex-box'
 
-type Story = StoryObj<VerticalBoxProps>
+type Story = StoryObj<FlexBoxProps>
 
 export default {
-  title: 'Layouts/VerticalBox',
-  render: (props) => <VerticalBox {...props} />,
-} as StorybookComponent<typeof VerticalBox>
+  title: 'Layouts/FlexBox',
+  render: (props) => <FlexBox {...props} />,
+} as StorybookComponent<typeof FlexBox>
 
 export const Default: Story = {
   args: {
@@ -28,7 +28,17 @@ export const Default: Story = {
         )}
       </For>
     ),
-    gap: 8,
-    padding: 4,
+    gap: '0px',
+    padding: '0px',
+  },
+}
+
+export const Modifiable: Story = {
+  args: {
+    ...Default.args,
+    direction: 'toleft',
+    hFilling: 'fill',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }

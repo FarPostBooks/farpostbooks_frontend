@@ -6,3 +6,5 @@ export { ContrastSign } from './contrast-sign'
 
 export type { TelegramLoginWidgetData } from './telegram-login-widget'
 export { TelegramLoginWidget } from './telegram-login-widget'
+
+export { FlexBox } from './flex-box'
