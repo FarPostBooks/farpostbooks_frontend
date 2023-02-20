@@ -1,4 +1,13 @@
+import { RouterProvider } from 'atomic-router-solid'
 import { render } from 'solid-js/web'
 import { App } from './app'
+import { router } from './routing'
 
-render(() => <App />, document.getElementById('root') as HTMLElement)
+render(
+  () => (
+    <RouterProvider router={router}>
+      <App />
+    </RouterProvider>
+  ),
+  document.getElementById('root') as HTMLElement
+)

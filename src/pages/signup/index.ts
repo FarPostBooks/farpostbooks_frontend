@@ -1,0 +1,1 @@
+export { signupRoute } from './route'

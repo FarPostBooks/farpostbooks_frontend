@@ -1,11 +1,4 @@
-import {
-  children,
-  Component,
-  createMemo,
-  JSX,
-  JSXElement,
-  splitProps,
-} from 'solid-js'
+import { children, Component, JSX, JSXElement, splitProps } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { FillingStrategy } from '../types'
 import s from './s.module.sass'
