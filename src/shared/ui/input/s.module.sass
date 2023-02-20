@@ -49,11 +49,18 @@
   height: var(--height)
 
 .wrapper
-  position: relative
+  display: flex
+  align-items: center
+  
   width: fit-content
-  & > *:last-child
-    position: absolute
-    top: 50%
-    right: 8px
-    transform: translate(0, -50%)
+  & > *:first-child
+    flex-grow: 1
+    padding-right: 32px
 
+  & > *:last-child
+    width: 24px
+    height: 24px
+    transform: translate(-100%, 0)
+    position: relative
+    left: -8px
+    float: right
