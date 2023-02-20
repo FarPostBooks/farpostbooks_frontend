@@ -1,21 +1,36 @@
-import { StoryObj, Meta } from '@storybook/html'
-import { ComponentProps } from 'solid-js'
+import { StoryObj } from '@storybook/html'
+import { StorybookComponent } from '@/storybook'
 import { Button, ButtonProps } from './button'
 
 type Story = StoryObj<ButtonProps>
 
 export default {
-  title: 'UIKit/Button',
-  tags: ['autodocs'],
-  argTypes: {
-    text: { control: 'text' },
-  },
+  title: 'Atoms/Button',
+  render: (props) => <Button {...props} />,
+} as StorybookComponent<typeof Button>
 
-  render: (props: ButtonProps) => <Button {...props} />,
-} as Meta<ComponentProps<typeof Button>>
+export const Fix: Story = {
+  args: { variant: 'common', text: 'Кнопка', filling: 'fix', width: 200 },
+}
 
-export const Default: Story = {
+export const Fit: Story = {
+  args: { variant: 'common', text: 'Кнопка', filling: 'fit' },
+}
+
+export const Fill: Story = {
+  args: { variant: 'common', text: 'Кнопка', filling: 'fill' },
+}
+
+export const Circled: Story = {
   args: {
-    text: 'Click me',
+    variant: 'circled',
+    icon: <img src={'/Logout.svg'} />,
+  },
+}
+
+export const CircledLight: Story = {
+  args: {
+    ...Circled.args,
+    light: true,
   },
 }

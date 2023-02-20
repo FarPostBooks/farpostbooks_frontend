@@ -1,0 +1,68 @@
+@import '../../styles/mixins'
+
+.input
+  @include NunitoFont
+  border-radius: 12px
+  border: 1px solid var(--border)
+  padding: 8px
+  color: var(--text-primary)
+  filter: var(--card-shadow)
+
+  &::placeholder 
+    @include NunitoFont
+    color: var(--text-secondary)
+
+  &:focus
+    outline: 1px solid var(--interactable-secondary)
+
+.inputText
+  height: 48px
+
+.textarea
+  resize: none
+
+.error
+  border: 2px solid var(--error)
+  color: var(--error)
+
+  &:focus
+    outline: none
+
+  &::placeholder
+    color: var(--error)
+
+.fill
+  width: 100%
+
+.fit
+  width: fit-content
+
+.fix
+  width: var(--width)
+
+.grow
+  flex-grow: 1
+
+.vertical-fill
+  height: 100%
+.vertical-fit
+  height: fit-content
+
+.vertical-fix
+  height: var(--height)
+
+.wrapper
+  display: flex
+  align-items: center
+  
+  width: fit-content
+  & > *:first-child
+    padding-right: 32px
+
+  & > *:last-child
+    width: 24px
+    height: 24px
+    transform: translate(-100%, 0)
+    position: relative
+    left: -8px
+    float: right

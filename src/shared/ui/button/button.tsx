@@ -1,9 +1,58 @@
+import { children, Component, JSX, JSXElement, splitProps } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
+import { FillingStrategy } from '../types'
 import s from './s.module.sass'
 
-export type ButtonProps = {
+export type Variant = 'circled' | 'common'
+
+export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
   text?: string
+  filling?: FillingStrategy
+  width?: number
+  variant: Variant
+  icon?: JSXElement
+  light?: boolean
+}
+
+export type CommonButtonProps = Omit<ButtonProps, 'variant'>
+export type CircledButtonProps = Omit<
+  ButtonProps,
+  'variant' | 'filling' | 'width'
+>
+
+export const CommonButton = (props: CommonButtonProps) => {
+  const [local, attributes] = splitProps(props, ['text', 'filling', 'width'])
+
+  return (
+    <button
+      classList={{ [s.commonButton]: true, [s[local.filling ?? 'fit']]: true }}
+      style={{ '--width': local.width ? `${local.width}px` : '200px' }}
+      {...attributes}
+    >
+      {local.text}
+    </button>
+  )
+}
+
+export const CircledButton = (props: CircledButtonProps) => {
+  const [local, attributes] = splitProps(props, ['text', 'light', 'icon'])
+  const icon = children(() => local.icon)
+
+  return (
+    <button
+      classList={{ [s.circledButton]: true, [s.light]: local.light }}
+      {...attributes}
+    >
+      {icon()}
+    </button>
+  )
+}
+
+const variants: { [key in Variant]: Component<Partial<ButtonProps>> } = {
+  common: CommonButton,
+  circled: CircledButton,
 }
 
 export const Button = (props: ButtonProps) => {
-  return <button classList={{ [s.button]: true }}>{props.text}</button>
+  return <Dynamic component={variants[props.variant]} {...props} />
 }
