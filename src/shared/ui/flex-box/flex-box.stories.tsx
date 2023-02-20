@@ -12,9 +12,7 @@ export default {
 
 export const Default: Story = {
   args: {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    components: (
+    children: (
       <For each={[0, 0, 0]}>
         {() => (
           <div

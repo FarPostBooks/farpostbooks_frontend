@@ -1,4 +1,4 @@
-import { createMemo, Show } from 'solid-js'
+import { children, Show } from 'solid-js'
 import s from './s.module.sass'
 import { NamedEvent, PureInputProps } from './types'
 
@@ -6,7 +6,7 @@ export const InputTextWithIcon = (props: PureInputProps) => {
   const inputHandler = (event: NamedEvent<HTMLInputElement>) => {
     props.onInput && props.onInput(event.currentTarget.value ?? '')
   }
-  const Icon = createMemo(() => (props.icon ? props.icon({}) : <></>))
+  const icon = children(() => props.icon)
 
   return (
     <div classList={{ [s.wrapper]: true }}>
@@ -20,9 +20,7 @@ export const InputTextWithIcon = (props: PureInputProps) => {
         {...props}
         onInput={inputHandler}
       />
-      <Show when={Icon}>
-        <Icon />
-      </Show>
+      <Show when={icon()}>{icon()}</Show>
     </div>
   )
 }

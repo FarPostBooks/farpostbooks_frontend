@@ -1,4 +1,4 @@
-import { Component } from 'solid-js'
+import { JSXElement } from 'solid-js'
 import { JSX } from 'solid-js/jsx-runtime'
 import { FillingStrategy } from '../types'
 
@@ -14,7 +14,7 @@ export type InputProps = {
   verticalFilling: FillingStrategy
   width?: number
   height?: number
-  icon?: Component
+  icon?: JSXElement
   style: JSX.CSSProperties
 }
 export type PureInputProps = Omit<InputProps, 'variant'>

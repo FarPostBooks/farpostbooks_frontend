@@ -24,7 +24,7 @@ export const Fill: Story = {
 export const Circled: Story = {
   args: {
     variant: 'circled',
-    icon: () => <img src={'/Logout.svg'} />,
+    icon: <img src={'/Logout.svg'} />,
   },
 }
 

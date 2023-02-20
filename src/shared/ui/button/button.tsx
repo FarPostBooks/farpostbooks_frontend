@@ -1,4 +1,11 @@
-import { Component, createMemo, JSX, splitProps } from 'solid-js'
+import {
+  children,
+  Component,
+  createMemo,
+  JSX,
+  JSXElement,
+  splitProps,
+} from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { FillingStrategy } from '../types'
 import s from './s.module.sass'
@@ -10,7 +17,7 @@ export type ButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
   filling?: FillingStrategy
   width?: number
   variant: Variant
-  icon?: Component
+  icon?: JSXElement
   light?: boolean
 }
 
@@ -36,14 +43,14 @@ export const CommonButton = (props: CommonButtonProps) => {
 
 export const CircledButton = (props: CircledButtonProps) => {
   const [local, attributes] = splitProps(props, ['text', 'light', 'icon'])
-  const Icon = createMemo(() => (local.icon ? local.icon({}) : <></>))
+  const icon = children(() => local.icon)
 
   return (
     <button
       classList={{ [s.circledButton]: true, [s.light]: local.light }}
       {...attributes}
     >
-      <Icon />
+      {icon()}
     </button>
   )
 }

@@ -45,6 +45,6 @@ export const InputTextWithIcon: Story = {
   args: {
     ...InputText.args,
     variant: 'withIcon',
-    icon: () => <img src="/Search.svg" />,
+    icon: <img src="/Search.svg" />,
   },
 }

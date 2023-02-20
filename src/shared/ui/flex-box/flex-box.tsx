@@ -3,10 +3,11 @@ import { FillingStrategy } from '../types'
 import s from './s.module.sass'
 
 export type FlexBoxProps = {
-  components: (() => JSXElement[]) | (() => JSXElement)
+  // components: (() => JSXElement[]) | (() => JSXElement)
+  children: JSXElement
   direction: 'totop' | 'tobottom' | 'toleft' | 'toright'
   alignItems?: 'start' | 'end' | 'center'
-  justifyContent?: 'start' | 'end' | 'center'
+  justifyContent?: 'start' | 'end' | 'center' | 'space-between'
   wrap: 'nowrap' | 'wrap' | 'wrap-reversed'
   gap: string
   padding: string
@@ -17,7 +18,7 @@ export type FlexBoxProps = {
 }
 
 export const FlexBox = (props: FlexBoxProps) => {
-  const c = children(() => props.components)
+  const c = children(() => props.children)
 
   return (
     <div
@@ -26,7 +27,7 @@ export const FlexBox = (props: FlexBoxProps) => {
         [s[props.direction]]: true,
         [s[props.wrap ?? 'wrap']]: true,
         [s[`h-${props.hFilling}`]]: true,
-        [s[`v-${props.hFilling}`]]: true,
+        [s[`v-${props.vFilling}`]]: true,
       }}
       style={{
         gap: props.gap,
