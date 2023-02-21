@@ -15,7 +15,7 @@ export type InputProps = {
   width?: number
   height?: number
   icon?: JSXElement
-  style: JSX.CSSProperties
+  style?: JSX.CSSProperties
 }
 export type PureInputProps = Omit<InputProps, 'variant'>
 export type NamedEvent<T extends HTMLElement> = Event & {
