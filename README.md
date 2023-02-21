@@ -1,6 +1,3 @@
-# solid-fsd-template
-Template for solid-js projects with effector and Feature-Sliced Design
-
 # Usage
 ### Run
 ```sh
