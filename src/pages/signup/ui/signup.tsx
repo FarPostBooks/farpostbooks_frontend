@@ -1,8 +1,13 @@
+import { createEffect } from 'solid-js'
 import { SignupForm } from '@/features/signup'
-import { Headbar } from '@/entities/headbar'
-import { FlexBox } from '@/shared/ui'
+import { FlexBox, Headbar, TelegramLoginWidgetData } from '@/shared/ui'
 
-export const Signup = () => {
+type SignupProps = {
+  telegramData: TelegramLoginWidgetData
+}
+export const Signup = (props: SignupProps) => {
+  createEffect(() => console.log(props.telegramData))
+
   return (
     <FlexBox
       direction="tobottom"
@@ -14,7 +19,7 @@ export const Signup = () => {
       alignItems="center"
     >
       <Headbar title="Регистрация" />
-      <SignupForm />
+      <SignupForm telegramData={props.telegramData} />
     </FlexBox>
   )
 }

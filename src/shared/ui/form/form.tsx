@@ -33,7 +33,7 @@ export const Form = (props: FormProps) => {
     >
       <FlexBox
         direction="tobottom"
-        gap="20px"
+        gap="24px"
         padding="0"
         wrap="nowrap"
         hFilling="fill"
