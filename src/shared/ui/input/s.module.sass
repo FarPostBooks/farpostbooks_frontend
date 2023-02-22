@@ -66,17 +66,14 @@
 
 
 .wrapper
-  display: flex
-  align-items: center
+  position: relative
   
-  width: fit-content
   & > *:first-child
     padding-right: 32px
 
   & > *:last-child
     width: 24px
     height: 24px
-    transform: translate(-100%, 0)
-    position: relative
-    left: -8px
-    float: right
+    transform: translate(0, 50%)
+    right: 8px
+    position: absolute

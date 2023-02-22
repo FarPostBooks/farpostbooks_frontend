@@ -7,5 +7,3 @@ sample({
   fn: (result) => result.result,
   target: $$session.updateToken,
 })
-
-$$session.$token.watch(console.log)

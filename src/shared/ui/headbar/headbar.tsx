@@ -35,7 +35,7 @@ export const Headbar = (props: HeadbarProps) => {
       vFilling="fit"
       wrap="nowrap"
       gap="10px"
-      padding="8px"
+      padding="0"
       justifyContent="center"
       alignItems="center"
     >

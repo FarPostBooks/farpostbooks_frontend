@@ -1,16 +1,20 @@
 import { createJsonMutation, declareParams } from '@farfetched/core'
 import { runtypeContract } from '@farfetched/runtypes'
-import { Token } from '@/entities/session/contract'
-import { IUser } from '@/shared'
+import { Token } from '@/entities/session'
+import { combineUrl } from '@/shared'
+import { ISignupUser } from '@/shared/types'
 import { TelegramLoginWidgetData } from '@/shared/ui'
 
 export const createUserMutation = createJsonMutation({
-  params: declareParams<{ telegram: TelegramLoginWidgetData; user: IUser }>(),
+  params: declareParams<{
+    telegram: TelegramLoginWidgetData
+    user: ISignupUser
+  }>(),
   request: {
-    url: 'http://localhost:8000/api/users',
+    url: combineUrl('users'),
     method: 'POST',
     body: ({ telegram, user }) => ({
-      user,
+      user: { ...user, name: `${user.name} ${user.surname}` },
       telegram,
     }),
   },

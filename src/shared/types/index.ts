@@ -1,6 +1,2 @@
-export type IUser = {
-  name: string
-  surname: string
-  position: string
-  about: string
-}
+export type { IUser, ISignupUser } from './user'
+export { User } from './user'

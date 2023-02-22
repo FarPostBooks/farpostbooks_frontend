@@ -3,7 +3,6 @@ import { FillingStrategy } from '../types'
 import s from './s.module.sass'
 
 export type FlexBoxProps = {
-  // components: (() => JSXElement[]) | (() => JSXElement)
   children: JSXElement
   direction: 'totop' | 'tobottom' | 'toleft' | 'toright'
   alignItems?: 'start' | 'end' | 'center'

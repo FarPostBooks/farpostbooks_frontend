@@ -3,7 +3,7 @@ import { createGate } from 'effector-solid'
 
 const readLocalStorageItem = <T>(name: string) => {
   const value = localStorage.getItem(name)
-  if (!value) return null
+  if (!value || value === 'undefined') return null
 
   return JSON.parse(value) as T
 }
@@ -19,21 +19,27 @@ const writeLocalStorageItem = <T>({
   localStorage.setItem(name, json)
 }
 
+const removeLocalStorageItem = (name: string) => {
+  localStorage.removeItem(name)
+}
+
 export const createLocalStorageItem = <T>(name: string) => {
   const gate = createGate()
 
   const $value = createStore<T | null>(readLocalStorageItem<T>(name))
   const update = createEvent<T>()
+  const remove = createEvent()
 
-  const willRead = sample({
+  const setupCompleted = sample({
     clock: gate.open,
-    fn: () => name,
+    source: $value,
   })
 
+  const $ready = createStore(false)
   sample({
-    clock: willRead,
-    fn: (name: string) => readLocalStorageItem<T>(name),
-    target: $value,
+    clock: gate.open,
+    fn: () => true,
+    target: $ready,
   })
 
   sample({
@@ -51,5 +57,16 @@ export const createLocalStorageItem = <T>(name: string) => {
     fn: (pare) => writeLocalStorageItem<T>(pare),
   })
 
-  return { $value, update, gate }
+  sample({
+    clock: remove,
+    fn: () => removeLocalStorageItem(name),
+  })
+
+  sample({
+    clock: remove,
+    fn: () => null,
+    target: $value,
+  })
+
+  return { $value, $ready, update, remove, setupCompleted, gate }
 }

@@ -1,13 +1,22 @@
 /* eslint-disable camelcase */
-import { createAuthorizedQuery, IToken, Token } from '@/entities/session'
+import { createJsonQuery, declareParams } from '@farfetched/core'
+import { runtypeContract } from '@farfetched/runtypes'
+import { Token } from '@/entities/session'
+import { combineUrl } from '@/shared'
 import { TelegramLoginWidgetData } from '@/shared/ui'
 
-export const updateToken = createAuthorizedQuery<
-  Pick<TelegramLoginWidgetData, 'id' | 'hash' | 'auth_date'>,
-  IToken
->({
-  url: ({ id, hash, auth_date }) =>
-    `http://localhost:8000/api/users/token?id=${id}&hash=${hash}&auth_date=${auth_date}`,
-  contract: Token,
-  method: 'GET',
+export const getTokenQuery = createJsonQuery({
+  params: declareParams<TelegramLoginWidgetData>(),
+  request: {
+    url: (params) => {
+      const qs = Object.entries(params)
+        .map(([k, v]) => `${k}=${v}`)
+        .join('&')
+      return `${combineUrl(`users/token?${qs}`)}`
+    },
+    method: 'GET',
+  },
+  response: {
+    contract: runtypeContract(Token),
+  },
 })
