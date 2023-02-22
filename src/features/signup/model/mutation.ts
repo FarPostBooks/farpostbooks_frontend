@@ -2,7 +2,7 @@ import { createJsonMutation, declareParams } from '@farfetched/core'
 import { runtypeContract } from '@farfetched/runtypes'
 import { Token } from '@/entities/session'
 import { combineUrl } from '@/shared'
-import { ISignupUser } from '@/shared/types'
+import { ISignupUser } from '@/shared'
 import { TelegramLoginWidgetData } from '@/shared/ui'
 
 export const createUserMutation = createJsonMutation({
