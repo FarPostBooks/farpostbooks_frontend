@@ -1,7 +1,6 @@
 import { Route } from 'atomic-router-solid'
-import { useGate, useStoreMap, useUnit } from 'effector-solid'
+import { useGate, useUnit } from 'effector-solid'
 import './styles/index.sass'
-import { createEffect } from 'solid-js'
 import {
   redirectToAdmin,
   redirectToAuthorization,
@@ -13,6 +12,7 @@ import { $$authorization, authRoute } from '@/pages/auth'
 import { Auth } from '@/pages/auth'
 import { Main, mainRoute } from '@/pages/main'
 import { Signup, signupRoute } from '@/pages/signup'
+import { NotificationManager } from '@/widgets/notification-manager'
 import { getMeQuery } from '@/entities/me/query'
 import { $$session } from '@/entities/session'
 import { Protected } from '@/shared/lib'
@@ -25,7 +25,7 @@ export const App = () => {
   const telegramData = useUnit($$authorization.$authorizationData)
   const authChecking = useUnit(getMeQuery.$pending)
   const authPassed = useUnit(getMeQuery.$succeeded)
-  const hasAdminRights = useUnit($$session.$admin)
+  // const hasAdminRights = useUnit($$session.$admin)
 
   return (
     <>
@@ -83,6 +83,7 @@ export const App = () => {
           )
         }}
       />
+      <NotificationManager />
     </>
   )
 }

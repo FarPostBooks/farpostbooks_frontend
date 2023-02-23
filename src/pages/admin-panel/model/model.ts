@@ -1,5 +1,7 @@
 import { createEvent, createStore, sample } from 'effector'
 import { addBookMutation, checkBookQuery } from '@/entities/book'
+import { $$notifications } from '@/entities/notification'
+import { IError } from '@/shared'
 
 export const adminPanelModel = () => {
   const checkBook = createEvent<{ isbn: number }>()
@@ -38,7 +40,16 @@ export const adminPanelModel = () => {
 
   sample({
     clock: checkBookQuery.finished.failure,
-    fn: console.log,
+    fn: (error) => ({
+      message: (error as IError).error.response.detail,
+    }),
+    target: $$notifications.addNotification,
+  })
+
+  sample({
+    clock: addBookMutation.finished.success,
+    fn: () => ({ message: 'Книга успешно добавлена' }),
+    target: $$notifications.addNotification,
   })
 
   return { checkBook, addBook, $modalOpened, closeClicked }
