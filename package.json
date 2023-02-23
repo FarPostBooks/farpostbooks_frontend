@@ -50,13 +50,16 @@
   },
   "dependencies": {
     "@farfetched/core": "^0.7.2",
+    "@farfetched/runtypes": "^0.7.2",
     "@farfetched/solid": "^0.7.2",
     "atomic-router": "^0.8.0",
     "atomic-router-solid": "^0.8.0",
-    "effector": "^22.5.0",
+    "effector": "^22.5.1",
     "effector-solid": "^0.22.7",
     "history": "^5.3.0",
+    "jwt-decode": "^3.1.2",
     "runtypes": "^6.6.0",
+    "solid-forms": "^0.4.8",
     "solid-js": "^1.6.10"
   },
   "volta": {

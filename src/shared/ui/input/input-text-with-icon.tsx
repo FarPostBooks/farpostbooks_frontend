@@ -1,11 +1,8 @@
 import { children, Show } from 'solid-js'
 import s from './s.module.sass'
-import { NamedEvent, PureInputProps } from './types'
+import { PureInputProps } from './types'
 
 export const InputTextWithIcon = (props: PureInputProps) => {
-  const inputHandler = (event: NamedEvent<HTMLInputElement>) => {
-    props.onInput && props.onInput(event.currentTarget.value ?? '')
-  }
   const icon = children(() => props.icon)
 
   return (
@@ -14,11 +11,11 @@ export const InputTextWithIcon = (props: PureInputProps) => {
         classList={{
           [s.input]: true,
           [s.inputText]: true,
-          [s.error]: !!props.error,
-          [s[props.filling]]: true,
+          [s.error]: !!props.hasError,
         }}
         {...props}
-        onInput={inputHandler}
+        onInput={(e) => props.control?.setValue(e.currentTarget.value)}
+        onBlur={() => props.control?.markTouched(true)}
       />
       <Show when={icon()}>{icon()}</Show>
     </div>

@@ -1,0 +1,1 @@
+export { createLocalStorageItem } from './model'

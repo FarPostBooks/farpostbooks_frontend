@@ -3,7 +3,7 @@ import { TelegramLoginWidgetData, TelegramLoginWidgetProps } from './types'
 
 export const TelegramLoginWidget = (props: TelegramLoginWidgetProps) => {
   let widget: HTMLDivElement
-  const render = () => <div ref={widget} />
+  const render = () => <div ref={widget} style={{ 'align-self': 'center' }} />
 
   onMount(() => {
     window.TelegramLoginWidget = {

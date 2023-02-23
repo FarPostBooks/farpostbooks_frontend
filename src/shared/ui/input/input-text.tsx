@@ -1,21 +1,17 @@
 import s from './s.module.sass'
-import { NamedEvent, PureInputProps } from './types'
+import { PureInputProps } from './types'
 
 export const InputText = (props: PureInputProps) => {
-  const inputHandler = (event: NamedEvent<HTMLInputElement>) => {
-    props.onInput && props.onInput(event.currentTarget.value ?? '')
-  }
-
   return (
     <input
+      {...props}
       classList={{
         [s.input]: true,
         [s.inputText]: true,
-        [s.error]: !!props.error,
-        [s[props.filling]]: true,
+        [s.error]: !!props.hasError,
       }}
-      {...props}
-      onInput={inputHandler}
+      onInput={(e) => props.control?.setValue(e.currentTarget.value)}
+      onBlur={() => props.control?.markTouched(true)}
     />
   )
 }
