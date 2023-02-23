@@ -36,6 +36,11 @@ export const adminPanelModel = () => {
     target: $modalOpened,
   })
 
+  sample({
+    clock: checkBookQuery.finished.failure,
+    fn: console.log,
+  })
+
   return { checkBook, addBook, $modalOpened, closeClicked }
 }
 

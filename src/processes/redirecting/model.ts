@@ -19,5 +19,3 @@ redirect({ clock: redirectToAdmin, route: adminRoute })
 
 export const redirectToProfile = createEvent()
 // redirect({clock: redirectToProfile, route: })
-
-redirectToMain.watch(console.log)

@@ -72,8 +72,6 @@ export const App = () => {
       <Route
         route={adminRoute}
         view={() => {
-          console.log('checking and passed', authChecking(), authPassed())
-
           return (
             <Protected
               checking={authChecking()}

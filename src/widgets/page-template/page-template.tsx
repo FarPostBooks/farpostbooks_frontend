@@ -1,4 +1,4 @@
-import { children, JSXElement } from 'solid-js'
+import { JSXElement } from 'solid-js'
 import { FlexBox } from '@/shared/ui'
 import { FillingStrategy } from '@/shared/ui/types'
 
@@ -7,7 +7,6 @@ export type PageTemplateProps = {
   vFilling?: FillingStrategy
 }
 export const PageTemplate = (props: PageTemplateProps) => {
-  const c = children(() => props.children)
   return (
     <FlexBox
       direction="tobottom"
@@ -18,7 +17,7 @@ export const PageTemplate = (props: PageTemplateProps) => {
       vFilling={props.vFilling ?? 'fit'}
       alignItems="center"
     >
-      {c()}
+      {props.children}
     </FlexBox>
   )
 }

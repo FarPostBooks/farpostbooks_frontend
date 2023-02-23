@@ -1,4 +1,4 @@
-import { children, JSXElement } from 'solid-js'
+import { JSXElement } from 'solid-js'
 import { FillingStrategy } from '../types'
 import s from './s.module.sass'
 
@@ -17,8 +17,6 @@ export type FlexBoxProps = {
 }
 
 export const FlexBox = (props: FlexBoxProps) => {
-  const c = children(() => props.children)
-
   return (
     <div
       classList={{
@@ -37,7 +35,7 @@ export const FlexBox = (props: FlexBoxProps) => {
         '--height': props.height ? `${props.height}px` : undefined,
       }}
     >
-      {c()}
+      {props.children}
     </div>
   )
 }

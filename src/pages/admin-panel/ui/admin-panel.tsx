@@ -1,10 +1,9 @@
-import { createQueryResource } from '@farfetched/solid'
 import { useUnit } from 'effector-solid'
 import { createFormControl } from 'solid-forms'
 import { createEffect, Show } from 'solid-js'
 import { Portal } from 'solid-js/web'
 import { PageTemplate } from '@/widgets/page-template'
-import { addBookMutation, checkBookQuery, IBook, Modal } from '@/entities/book'
+import { checkBookQuery, IBook, Modal } from '@/entities/book'
 import { $$session } from '@/entities/session'
 import { Button, Form, Headbar, Input } from '@/shared/ui'
 import { $$adminPanel } from '../model'
@@ -14,11 +13,16 @@ export type AdminPanelProps = {
 }
 
 export const AdminPanel = (props: AdminPanelProps) => {
+  const bookPreview = useUnit(checkBookQuery.$data)
+  const modalOpened = useUnit($$adminPanel.$modalOpened)
+
   const ISBNControl = createFormControl('', {
-    validators: (value: string) =>
-      !/([0-9])+/.test(value)
-        ? { wrongFormat: 'Код должен состоять только из цифр' }
-        : null,
+    validators: [
+      (value: string) =>
+        !/([0-9])+/.test(value)
+          ? { wrongFormat: 'Код должен состоять только из цифр' }
+          : null,
+    ],
   })
 
   createEffect(() => {
@@ -41,9 +45,6 @@ export const AdminPanel = (props: AdminPanelProps) => {
 
     $$adminPanel.checkBook({ isbn: parseInt(ISBNControl.value) })
   }
-
-  const [bookPreview] = createQueryResource(checkBookQuery)
-  const modalOpened = useUnit($$adminPanel.$modalOpened)
 
   return (
     <PageTemplate>
