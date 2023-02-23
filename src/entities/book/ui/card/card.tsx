@@ -1,14 +1,17 @@
+import { combineStatic } from '@/shared'
 import { FlexBox, Header, Image, Paragraph } from '@/shared/ui'
 import { IBookCompact } from '../../model'
 import s from './s.module.sass'
 
-export type CardProps = IBookCompact
+export type CardProps = IBookCompact & {
+  onClick: () => void
+}
 
 export const Card = (props: CardProps) => {
   return (
-    <div classList={{ [s.bookCard]: true }}>
+    <div classList={{ [s.bookCard]: true }} onClick={() => props.onClick()}>
       <Image
-        src={props.image}
+        src={combineStatic(props.image)}
         alt={props.name + ' обложка'}
         variant={'compact'}
       />

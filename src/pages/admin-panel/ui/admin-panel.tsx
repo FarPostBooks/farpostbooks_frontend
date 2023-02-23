@@ -15,6 +15,7 @@ export type AdminPanelProps = {
 export const AdminPanel = (props: AdminPanelProps) => {
   const bookPreview = useUnit(checkBookQuery.$data)
   const modalOpened = useUnit($$adminPanel.$modalOpened)
+  const bookPending = useUnit(checkBookQuery.$pending)
 
   const ISBNControl = createFormControl('', {
     validators: [
@@ -64,24 +65,23 @@ export const AdminPanel = (props: AdminPanelProps) => {
         />
         <Button text="Добавить" filling="fill" variant="common" />
       </Form>
-      <Show when={!!bookPreview() && modalOpened()}>
-        <Portal>
-          <Modal
-            {...(bookPreview() as IBook)}
-            onBack={$$adminPanel.closeClicked}
-            actionElement={
-              <Button
-                text="Добавить"
-                variant="common"
-                filling="fill"
-                onClick={() =>
-                  $$adminPanel.addBook({ isbn: (bookPreview() as IBook).id })
-                }
-              />
-            }
-          />
-        </Portal>
-      </Show>
+      <Portal>
+        <Modal
+          {...(bookPreview() as IBook)}
+          opened={!!bookPreview() && modalOpened() && !bookPending()}
+          onBack={$$adminPanel.closeClicked}
+          actionElement={
+            <Button
+              text="Добавить"
+              variant="common"
+              filling="fill"
+              onClick={() =>
+                $$adminPanel.addBook({ isbn: (bookPreview() as IBook).id })
+              }
+            />
+          }
+        />
+      </Portal>
     </PageTemplate>
   )
 }
