@@ -17,9 +17,12 @@ import { getMeQuery } from '@/entities/me/query'
 import { $$session } from '@/entities/session'
 import { Protected } from '@/shared/lib'
 import { TelegramLoginWidgetData } from '@/shared/ui'
+import '@/features/profile'
+import '@/processes/book-borrowing'
 
 export const App = () => {
   useGate($$session.TokenGate)
+  useGate($$session.TelegramIdGate)
   useGate($$authorization.AuthorizationGate)
 
   const telegramData = useUnit($$authorization.$authorizationData)

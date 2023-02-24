@@ -2,6 +2,7 @@ import path from 'path'
 
 import devtools from 'solid-devtools/vite'
 import { defineConfig } from 'vite'
+import babel from 'vite-plugin-babel'
 import solidPlugin from 'vite-plugin-solid'
 import solidSvg from 'vite-plugin-solid-svg'
 
@@ -19,6 +20,11 @@ export default defineConfig({
     }),
     devtools({
       autoname: true,
+    }),
+    babel({
+      babelConfig: {
+        // plugins: [['effector/babel-plugin', { addLoc: true, addNames: true }]],
+      },
     }),
   ],
 

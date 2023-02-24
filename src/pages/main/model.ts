@@ -1,38 +1,42 @@
 import { createEvent, createStore, sample } from 'effector'
 import { createGate } from 'effector-solid'
-import { openBookQuery, getBooksQuery, IBooks } from '@/entities/book'
+import { debug } from 'patronum'
+import { returnBookMutation, takeBookMutation } from '@/features/take-book'
+import { openBookQuery, getBooksQuery } from '@/entities/book'
+import { IBooks } from '@/shared'
+import { createPaginationControls } from '@/shared/lib'
 
 export const mainModel = () => {
   const gate = createGate()
 
   const openBook = createEvent<{ isbn: number }>()
   const closeBook = createEvent()
+  const takeBook = createEvent<{ isbn: number }>()
+  const returnBook = createEvent()
 
-  const loadMore = createEvent()
+  const willLoad = createEvent<{ offset: number; limit: number }>()
+  const loaded = sample({
+    clock: getBooksQuery.finished.success,
+    fn: () => null,
+  })
+
+  const { load, reload } = createPaginationControls({
+    limit: 5,
+    updateParamsClock: loaded,
+    loadAction: willLoad,
+  })
 
   const $opened = createStore(false)
-  const $offset = createStore(0)
-  const $limit = createStore(2)
   const $books = createStore<IBooks>([])
 
   sample({
     clock: gate.open,
-    source: { offset: $offset, limit: $limit },
-    fn: (params) => params,
-    target: getBooksQuery.start,
+    target: reload,
   })
+  $books.reset(reload)
 
   sample({
-    clock: loadMore,
-    source: { offset: $offset, limit: $limit },
-    fn: ({ offset, limit }) => offset + limit,
-    target: $offset,
-  })
-
-  sample({
-    clock: $offset,
-    source: $limit,
-    fn: (limit, offset) => ({ limit, offset }),
+    clock: willLoad,
     target: getBooksQuery.start,
   })
 
@@ -61,8 +65,34 @@ export const mainModel = () => {
     target: $opened,
   })
 
-  $offset.watch(console.log)
-  return { gate, openBook, closeBook, $opened, $books, loadMore }
+  sample({
+    clock: takeBook,
+    target: takeBookMutation.start,
+  })
+
+  sample({
+    clock: returnBook,
+    fn: () => null,
+    target: returnBookMutation.start,
+  })
+
+  debug({
+    takeBook,
+    returnBook,
+    takeFinished: takeBookMutation.finished.failure,
+    returnFinished: returnBookMutation.finished.failure,
+  })
+
+  return {
+    gate,
+    openBook,
+    closeBook,
+    $opened,
+    $books,
+    loadMore: load,
+    takeBook,
+    returnBook,
+  }
 }
 
 export const $$main = mainModel()

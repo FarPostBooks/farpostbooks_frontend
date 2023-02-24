@@ -2,6 +2,8 @@ import {
   createJsonQuery,
   createJsonMutation,
   declareParams,
+  SourcedField,
+  Json,
 } from '@farfetched/core'
 import { runtypeContract } from '@farfetched/runtypes'
 import { Runtype } from 'runtypes'
@@ -38,10 +40,14 @@ export const createAuthorizedMutation = <Params, Contract>({
   url,
   contract,
   method,
+  successCode,
+  body,
 }: {
-  url: ((params: Params) => string) | string
+  url: SourcedField<Params, string, void>
   contract: Runtype<Contract>
   method: 'GET' | 'DELETE' | 'POST' | 'PUT'
+  successCode?: number
+  body?: SourcedField<Params, Json, void>
 }) => {
   return createJsonMutation({
     params: declareParams<Params>(),
@@ -53,10 +59,12 @@ export const createAuthorizedMutation = <Params, Contract>({
         }),
       },
       method,
+      body,
       url,
     },
     response: {
       contract: runtypeContract(contract),
+      status: { expected: successCode ?? 200 },
     },
   })
 }

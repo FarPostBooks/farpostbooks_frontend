@@ -1,10 +1,11 @@
-import { combineUrl } from '@/shared'
+import { combineUrl, IUser, User } from '@/shared'
 // eslint-disable-next-line boundaries/element-types
 import { createAuthorizedQuery } from '../session'
-import { IMe, Me } from './contract'
 
-export const getMeQuery = createAuthorizedQuery<null, IMe>({
+export const getMeQuery = createAuthorizedQuery<null, IUser>({
   url: combineUrl('users/me'),
-  contract: Me,
+  contract: User,
   method: 'GET',
 })
+
+// export const getMyBooks = createAuthorizedQuery<telegramId,

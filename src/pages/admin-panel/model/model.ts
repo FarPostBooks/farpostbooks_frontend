@@ -39,6 +39,12 @@ export const adminPanelModel = () => {
   })
 
   sample({
+    clock: checkBookQuery.start,
+    fn: () => ({ message: 'Поиск книги начался' }),
+    target: $$notifications.addNotification,
+  })
+
+  sample({
     clock: checkBookQuery.finished.failure,
     fn: (error) => ({
       message: (error as IError).error.response.detail,

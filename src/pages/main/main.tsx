@@ -1,19 +1,28 @@
 import { createQueryResource } from '@farfetched/solid'
-import { useGate, useUnit } from 'effector-solid'
+import { useGate, useStoreMap, useUnit } from 'effector-solid'
 import { createFormControl } from 'solid-forms'
-import { createEffect, For, Show } from 'solid-js'
+import { createEffect, For, Match, Show, Switch } from 'solid-js'
 import { Portal } from 'solid-js/web'
 import { PageTemplate } from '@/widgets/page-template'
-import {
-  Card,
-  getBooksQuery,
-  IBook,
-  Modal,
-  openBookQuery,
-} from '@/entities/book'
+import { $$profile } from '@/features/profile'
+import { returnBookMutation, takeBookMutation } from '@/features/take-book'
+import { Card, Modal, openBookQuery } from '@/entities/book'
 import { $$session } from '@/entities/session'
-import { Button, Headbar, Input } from '@/shared/ui'
+import { IBook } from '@/shared'
+import { intersect as intersectDirective } from '@/shared/lib'
+import { Button, ContrastSign, Headbar, Input } from '@/shared/ui'
 import { $$main } from './model'
+
+const intersect = intersectDirective
+
+declare module 'solid-js' {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface Directives {
+      intersect: () => void
+    }
+  }
+}
 
 export type MainProps = {
   redirectToProfile: () => void
@@ -25,6 +34,10 @@ export const Main = (props: MainProps) => {
   const hasAdminRules = useUnit($$session.$admin)
   const bookOpened = useUnit($$main.$opened)
   const books = useUnit($$main.$books)
+  const currentUserBook = useStoreMap($$profile.$currentBook, (currentBook) => {
+    if (!currentBook) return null
+    return currentBook.book.id
+  })
 
   const searchControl = createFormControl('')
 
@@ -34,7 +47,6 @@ export const Main = (props: MainProps) => {
     }
   })
 
-  // const [books] = createQueryResource(getBooksQuery)
   const [currentBook] = createQueryResource(openBookQuery)
 
   return (
@@ -71,18 +83,12 @@ export const Main = (props: MainProps) => {
             <Card
               {...book}
               onClick={() => {
-                console.log('here')
                 $$main.openBook({ isbn: book.id })
               }}
             />
           )}
         </For>
-
-        <Button
-          variant="common"
-          text="Загрузить еще"
-          onClick={() => $$main.loadMore()}
-        />
+        <div use:intersect={$$main.loadMore} />
       </Show>
 
       <Portal>
@@ -90,7 +96,37 @@ export const Main = (props: MainProps) => {
           {...(currentBook() as IBook)}
           opened={currentBook() && bookOpened()}
           onBack={$$main.closeBook}
-          actionElement={<></>}
+          actionElement={
+            <Switch>
+              <Match
+                when={
+                  currentUserBook() && currentUserBook() !== currentBook()?.id
+                }
+              >
+                <ContrastSign variant="warning" text="Вы уже взяли книгу!" />
+              </Match>{' '}
+              <Match when={currentUserBook() !== currentBook()?.id}>
+                <Button
+                  variant="common"
+                  text="Взять"
+                  onClick={() =>
+                    $$main.takeBook({
+                      isbn: (currentBook() as IBook).id,
+                    })
+                  }
+                  filling="fill"
+                />
+              </Match>
+              <Match when={currentUserBook() === currentBook()?.id}>
+                <Button
+                  variant="common"
+                  text="Вернуть"
+                  onClick={() => $$main.returnBook()}
+                  filling="fill"
+                />
+              </Match>
+            </Switch>
+          }
         />
       </Portal>
     </PageTemplate>

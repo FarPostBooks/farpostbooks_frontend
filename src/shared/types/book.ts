@@ -11,7 +11,7 @@ export const BookCompact = Record({
 export const BookUsabiliyStamp = Record({
   user: User,
   get_timestamp: String,
-  back_timestamp: String,
+  back_timestamp: String.Or(Null),
 })
 
 export const Book = BookCompact.extend({

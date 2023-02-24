@@ -3,6 +3,6 @@ export {
   checkBookQuery,
   getBooksQuery,
   openBookQuery,
+  getUserBooksQuery,
 } from './model'
-export type { IBook, IBookCompact, IBooks } from './model'
 export { Card, Modal } from './ui'

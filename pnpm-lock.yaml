@@ -33,6 +33,7 @@ specifiers:
   history: ^5.3.0
   husky: ^8.0.3
   jwt-decode: ^3.1.2
+  patronum: ^1.15.0
   prettier: ^2.8.4
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -59,6 +60,7 @@ dependencies:
   effector-solid: 0.22.7_4argknuaibxpz74k5reilvl6tq
   history: 5.3.0
   jwt-decode: 3.1.2
+  patronum: 1.15.0_effector@22.5.1
   runtypes: 6.6.0
   solid-forms: 0.4.8_solid-js@1.6.10
   solid-js: 1.6.10
@@ -8708,6 +8710,14 @@ packages:
   /pathe/1.1.0:
     resolution: {integrity: sha512-ODbEPR0KKHqECXW1GoxdDb+AZvULmXjVPy4rt+pGo2+TnjJTIPJQSVS6N63n8T2Ip+syHhbn52OewKicV0373w==}
     dev: true
+
+  /patronum/1.15.0_effector@22.5.1:
+    resolution: {integrity: sha512-80nQt3xdPjxM4e/DS/hY4+R02E4Tu336wWUembFWLgwh7y4i0+KjJV1XU0LCtpXN5qN0QSiPVWeUOfh5N6adOQ==}
+    peerDependencies:
+      effector: ^22.1.2
+    dependencies:
+      effector: 22.5.1
+    dev: false
 
   /pend/1.2.0:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}

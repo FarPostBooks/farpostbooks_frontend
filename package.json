@@ -58,6 +58,7 @@
     "effector-solid": "^0.22.7",
     "history": "^5.3.0",
     "jwt-decode": "^3.1.2",
+    "patronum": "^1.15.0",
     "runtypes": "^6.6.0",
     "solid-forms": "^0.4.8",
     "solid-js": "^1.6.10"

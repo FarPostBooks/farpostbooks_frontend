@@ -2,7 +2,7 @@ import { createEffect, createEvent, createStore, sample } from 'effector'
 import { Notification } from '../types'
 
 export const notificationsModel = () => {
-  const notificationTimeout = 3000
+  const NOTIFICATIONS_TIMEOUT = 2500
 
   const $notifications = createStore<Array<Notification>>([])
   const addNotification = createEvent<Notification>()
@@ -10,13 +10,20 @@ export const notificationsModel = () => {
   const popNotification = createEvent()
 
   const notificationsLoopFx = createEffect(async () => {
-    setTimeout(popNotification, notificationTimeout)
+    setTimeout(popNotification, NOTIFICATIONS_TIMEOUT)
   })
 
   sample({
     clock: $notifications,
     fn: (notifications) => notifications.at(0) ?? null,
     target: $current,
+  })
+
+  sample({
+    clock: addNotification,
+    source: $notifications,
+    filter: (notifications) => !notifications.length,
+    target: notificationsLoopFx,
   })
 
   sample({
@@ -29,23 +36,21 @@ export const notificationsModel = () => {
   sample({
     clock: popNotification,
     source: $notifications,
-    filter: Boolean,
     fn: (notifications) => notifications.slice(1),
     target: $notifications,
   })
 
   sample({
-    clock: $notifications,
-    source: notificationsLoopFx.pending,
-    filter: (pending, notifications) =>
-      !pending && Boolean(notifications.length),
+    clock: popNotification,
+    source: $notifications,
+    filter: (notifications) => Boolean(notifications.length),
     target: notificationsLoopFx,
   })
 
   return {
     $currentNotification: $current,
     addNotification,
-    notificationTimeout,
+    notificationsTimeout: NOTIFICATIONS_TIMEOUT,
   }
 }
 

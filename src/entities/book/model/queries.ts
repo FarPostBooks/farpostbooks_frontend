@@ -3,8 +3,15 @@ import {
   createAuthorizedMutation,
   createAuthorizedQuery,
 } from '@/entities/session'
-import { combineUrl } from '@/shared'
-import { Book, Books, IBook, IBooks } from './contracts'
+import {
+  combineUrl,
+  Book,
+  Books,
+  IBook,
+  IBooks,
+  IUserBooks,
+  UserBooks,
+} from '@/shared'
 
 export const checkBookQuery = createAuthorizedQuery<number, IBook>({
   url: (isbn) => combineUrl(`books/${isbn}`),
@@ -31,5 +38,15 @@ export const getBooksQuery = createAuthorizedQuery<
   url: ({ limit, offset }) =>
     combineUrl(`books/?limit=${limit}&offset=${offset}`),
   contract: Books,
+  method: 'GET',
+})
+
+export const getUserBooksQuery = createAuthorizedQuery<
+  { limit: number; offset: number; telegramId: number },
+  IUserBooks
+>({
+  url: ({ limit, offset, telegramId }) =>
+    combineUrl(`users/${telegramId}/books?limit=${limit}&offset=${offset}`),
+  contract: UserBooks,
   method: 'GET',
 })
