@@ -1,5 +1,5 @@
 export const config = {
-  base: 'http://localhost:8000/',
+  base: import.meta.env.VITE_FARPOSTBOOKS_BACKEND_URL,
 }
 
 export const combineUrl = (route: string) => `${config.base}api/${route}`

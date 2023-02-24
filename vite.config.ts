@@ -1,8 +1,6 @@
 import path from 'path'
-
-import devtools from 'solid-devtools/vite'
-import { defineConfig } from 'vite'
-import babel from 'vite-plugin-babel'
+import { visualizer } from 'rollup-plugin-visualizer'
+import { defineConfig, PluginOption } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
 import solidSvg from 'vite-plugin-solid-svg'
 
@@ -18,28 +16,17 @@ export default defineConfig({
     solidSvg({
       defaultAsComponent: true,
     }),
-    devtools({
-      autoname: true,
-    }),
-    babel({
-      babelConfig: {
-        // plugins: [['effector/babel-plugin', { addLoc: true, addNames: true }]],
-      },
-    }),
+    [visualizer() as PluginOption],
   ],
 
   server: {
-    port: 3000,
-    // proxy: {
-    //   base: {
-    //     target: 'http://localhost:8000/api',
-    //     changeOrigin: true,
-    //     secure: false,
-    //     rewrite: (path) => path.replace(/^\/base/, ''),
-    //   },
-    // },
+    port: 3001,
   },
   build: {
     target: 'esnext',
+  },
+  preview: {
+    port: 3001,
+    host: true,
   },
 })
