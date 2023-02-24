@@ -1,6 +1,5 @@
-import { combineStatic } from '@/shared'
+import { combineStatic, IBookCompact } from '@/shared'
 import { FlexBox, Header, Image, Paragraph } from '@/shared/ui'
-import { IBookCompact } from '../../model'
 import s from './s.module.sass'
 
 export type CardProps = IBookCompact & {

@@ -11,6 +11,7 @@ import { AdminPanel, adminRoute } from '@/pages/admin-panel'
 import { $$authorization, authRoute } from '@/pages/auth'
 import { Auth } from '@/pages/auth'
 import { Main, mainRoute } from '@/pages/main'
+import { Profile, profileRoute } from '@/pages/profile'
 import { Signup, signupRoute } from '@/pages/signup'
 import { NotificationManager } from '@/widgets/notification-manager'
 import { getMeQuery } from '@/entities/me/query'
@@ -71,7 +72,18 @@ export const App = () => {
           </Protected>
         )}
       />
-
+      <Route
+        route={profileRoute}
+        view={() => (
+          <Protected
+            checking={authChecking()}
+            hasAccess={authPassed()}
+            redirect={redirectToAuthorization}
+          >
+            <Profile onBack={redirectToMain} onLogout={$$session.removeToken} />
+          </Protected>
+        )}
+      />
       <Route
         route={adminRoute}
         view={() => {

@@ -3,6 +3,7 @@ import { createEvent } from 'effector'
 import { adminRoute } from '@/pages/admin-panel'
 import { $$authorization, authRoute } from '@/pages/auth'
 import { mainRoute } from '@/pages/main'
+import { profileRoute } from '@/pages/profile'
 import { signupRoute } from '@/pages/signup'
 import { createUserMutation } from '@/features/signup'
 
@@ -18,4 +19,4 @@ export const redirectToAdmin = createEvent()
 redirect({ clock: redirectToAdmin, route: adminRoute })
 
 export const redirectToProfile = createEvent()
-// redirect({clock: redirectToProfile, route: })
+redirect({ clock: redirectToProfile, route: profileRoute })
