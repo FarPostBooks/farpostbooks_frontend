@@ -1,2 +1,7 @@
 export type { IUser, ISignupUser } from './user'
 export { User } from './user'
+export type { IError } from './error'
+export { Book, Books } from './book'
+export type { IBook, IBooks, IBookCompact } from './book'
+export { UserBooks, UserBook } from './userbook'
+export type { IUserBook, IUserBooks } from './userbook'

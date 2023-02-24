@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "dev": "vite",
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview", 
     "lint": "eslint",
     "format": "prettier",
     "storybook": "storybook dev -p 6006"
@@ -39,6 +41,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^3.14.0",
+    "rollup-plugin-visualizer": "^5.9.0",
     "sass": "^1.58.0",
     "solid-devtools": "^0.24.7",
     "storybook": "7.0.0-beta.46",
@@ -58,6 +61,7 @@
     "effector-solid": "^0.22.7",
     "history": "^5.3.0",
     "jwt-decode": "^3.1.2",
+    "patronum": "^1.15.0",
     "runtypes": "^6.6.0",
     "solid-forms": "^0.4.8",
     "solid-js": "^1.6.10"

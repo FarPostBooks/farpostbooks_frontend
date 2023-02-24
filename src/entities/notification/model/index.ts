@@ -1,0 +1,1 @@
+export { $$notifications } from './model'

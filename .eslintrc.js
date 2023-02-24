@@ -7,13 +7,12 @@ module.exports = {
 
   parser: '@typescript-eslint/parser',
 
-  plugins: ['@typescript-eslint', 'effector', 'solid'],
+  plugins: ['@typescript-eslint', 'solid'],
 
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:solid/typescript',
-    'plugin:effector/recommended',
     '@feature-sliced',
     'prettier',
   ],

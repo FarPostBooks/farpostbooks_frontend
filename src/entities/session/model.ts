@@ -19,6 +19,13 @@ const sessionModel = () => {
     return decoded.scopes.includes('admin')
   })
 
+  const {
+    $value: $telegramId,
+    update: updateTelegramId,
+    setupCompleted: telegramIdSetupCompleted,
+    gate: TelegramIdGate,
+  } = createLocalStorageItem<number>('telegramId')
+
   return {
     $token,
     $tokenReady,
@@ -27,6 +34,11 @@ const sessionModel = () => {
     removeToken,
     tokenSetupCompleted,
     TokenGate,
+
+    $telegramId,
+    updateTelegramId,
+    TelegramIdGate,
+    telegramIdSetupCompleted,
   }
 }
 

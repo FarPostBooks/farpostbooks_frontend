@@ -1,11 +1,18 @@
+.modalBase
+  top: 0
+  position: fixed
+  width: 100%
+  height: 100%
+  overflow: scroll
+  // z-index: 100
+  background: var(--background)
+   
 .bookModal
   border-radius: 16px
   background: var(--background)
   filter: var(--card-shadow)
   margin: 20px
-  position: absolute
-  top: 0
-  min-height: 200vh
+  height: fit-content
 
   & > *:first-child
     position: fixed
