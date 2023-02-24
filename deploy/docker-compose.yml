@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile
+
+    ports:
+      - 3001:3001
+
+    restart: always
+
+    volumes:
+      - ./src:/app/src
+
