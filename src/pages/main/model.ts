@@ -17,6 +17,7 @@ export const mainModel = () => {
   const willLoad = createEvent<{ offset: number; limit: number }>()
   const loaded = sample({
     clock: getBooksQuery.finished.success,
+    filter: (response) => response.result.length > 0,
     fn: () => null,
   })
 

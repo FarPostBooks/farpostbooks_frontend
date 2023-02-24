@@ -2,7 +2,7 @@ import { createEvent, createStore, sample } from 'effector'
 import { debug } from 'patronum'
 import { getUserBooksQuery } from '@/entities/book'
 import { $$session } from '@/entities/session'
-import { IUserBook, UserBooks } from '@/shared'
+import { IUserBook } from '@/shared'
 import { createPaginationControls } from '@/shared/lib'
 
 export const profileModel = () => {
@@ -11,6 +11,7 @@ export const profileModel = () => {
 
   const loaded = sample({
     clock: getUserBooksQuery.finished.success,
+    filter: (response) => response.result.books.length > 0,
     fn: () => null,
   })
 
