@@ -15,3 +15,7 @@ pnpm lint [path]
 ```sh
 pnpm format [path]
 ```
+### Deploy
+```sh
+docker-compose -f deploy/docker-compose.yml --project-directory . up --build
+```
