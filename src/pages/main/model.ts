@@ -3,7 +3,7 @@ import { createGate } from 'effector-solid'
 import { debug } from 'patronum'
 import { returnBookMutation, takeBookMutation } from '@/features/take-book'
 import { openBookQuery, getBooksQuery } from '@/entities/book'
-import { IBooks } from '@/shared'
+import { IBook, IBooks } from '@/shared'
 import { createPaginationControls } from '@/shared/lib'
 
 export const mainModel = () => {
@@ -88,6 +88,17 @@ export const mainModel = () => {
   sample({
     clock: searchChanged,
     target: $search,
+  })
+
+  sample({
+    clock: [
+      takeBookMutation.finished.success,
+      returnBookMutation.finished.success,
+    ],
+    source: openBookQuery.$data,
+    filter: Boolean,
+    fn: (book: IBook) => book.id,
+    target: openBookQuery.start,
   })
 
   debug({

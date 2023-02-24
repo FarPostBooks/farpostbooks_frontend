@@ -3,6 +3,7 @@ import { useGate, useStoreMap, useUnit } from 'effector-solid'
 import { createFormControl } from 'solid-forms'
 import { createEffect, For, Match, Show, Switch } from 'solid-js'
 import { Portal } from 'solid-js/web'
+import { BookModal } from '@/widgets/book-modal'
 import { PageTemplate } from '@/widgets/page-template'
 import { $$profile } from '@/features/profile'
 import { Card, Modal, openBookQuery } from '@/entities/book'
@@ -93,45 +94,14 @@ export const Main = (props: MainProps) => {
         </For>
         <div use:intersect={$$main.loadMore} />
       </Show>
-
-      <Portal>
-        <Modal
-          {...(currentBook() as IBook)}
-          opened={currentBook() && bookOpened()}
-          onBack={$$main.closeBook}
-          actionElement={
-            <Switch>
-              <Match
-                when={
-                  currentUserBook() && currentUserBook() !== currentBook()?.id
-                }
-              >
-                <ContrastSign variant="warning" text="Вы уже взяли книгу!" />
-              </Match>{' '}
-              <Match when={currentUserBook() !== currentBook()?.id}>
-                <Button
-                  variant="common"
-                  text="Взять"
-                  onClick={() =>
-                    $$main.takeBook({
-                      isbn: (currentBook() as IBook).id,
-                    })
-                  }
-                  filling="fill"
-                />
-              </Match>
-              <Match when={currentUserBook() === currentBook()?.id}>
-                <Button
-                  variant="common"
-                  text="Вернуть"
-                  onClick={() => $$main.returnBook()}
-                  filling="fill"
-                />
-              </Match>
-            </Switch>
-          }
-        />
-      </Portal>
+      <BookModal
+        currentBook={currentBook()}
+        currentUserBook={currentUserBook()}
+        bookOpened={bookOpened()}
+        closeBook={$$main.closeBook}
+        takeBook={() => $$main.takeBook({ isbn: currentBook()?.id as number })}
+        returnBook={$$main.returnBook}
+      />
     </PageTemplate>
   )
 }
