@@ -5,7 +5,6 @@ import { createEffect, For, Match, Show, Switch } from 'solid-js'
 import { Portal } from 'solid-js/web'
 import { PageTemplate } from '@/widgets/page-template'
 import { $$profile } from '@/features/profile'
-import { returnBookMutation, takeBookMutation } from '@/features/take-book'
 import { Card, Modal, openBookQuery } from '@/entities/book'
 import { $$session } from '@/entities/session'
 import { IBook } from '@/shared'
@@ -33,7 +32,7 @@ export const Main = (props: MainProps) => {
   useGate($$main.gate)
   const hasAdminRules = useUnit($$session.$admin)
   const bookOpened = useUnit($$main.$opened)
-  const books = useUnit($$main.$books)
+  const books = useUnit($$main.$filteredBooks)
   const currentUserBook = useStoreMap($$profile.$currentBook, (currentBook) => {
     if (!currentBook) return null
     return currentBook.book.id
@@ -45,6 +44,10 @@ export const Main = (props: MainProps) => {
     if (!searchControl.isValid) {
       searchControl.markDirty(true)
     }
+  })
+
+  createEffect(() => {
+    $$main.searchChanged(searchControl.value)
   })
 
   const [currentBook] = createQueryResource(openBookQuery)

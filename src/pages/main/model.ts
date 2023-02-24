@@ -1,4 +1,4 @@
-import { createEvent, createStore, sample } from 'effector'
+import { combine, createEvent, createStore, sample } from 'effector'
 import { createGate } from 'effector-solid'
 import { debug } from 'patronum'
 import { returnBookMutation, takeBookMutation } from '@/features/take-book'
@@ -26,8 +26,16 @@ export const mainModel = () => {
     loadAction: willLoad,
   })
 
+  const searchChanged = createEvent<string>()
+
   const $opened = createStore(false)
   const $books = createStore<IBooks>([])
+  const $search = createStore('')
+  const $filteredBooks = combine($books, $search, (books, search) =>
+    books.filter((book) =>
+      book.name.toLowerCase().includes(search.toLowerCase())
+    )
+  )
 
   sample({
     clock: gate.open,
@@ -76,6 +84,11 @@ export const mainModel = () => {
     target: returnBookMutation.start,
   })
 
+  sample({
+    clock: searchChanged,
+    target: $search,
+  })
+
   debug({
     takeBook,
     returnBook,
@@ -92,6 +105,8 @@ export const mainModel = () => {
     loadMore: load,
     takeBook,
     returnBook,
+    searchChanged,
+    $filteredBooks,
   }
 }
 
