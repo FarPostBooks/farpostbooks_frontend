@@ -55,6 +55,8 @@ export const Profile = (props: ProfileProps) => {
         <Section headerVariant="h2" name="На руках:">
           <Card
             {...(currentBook()?.book as IBookCompact)}
+            taken={currentBook()?.get_timestamp}
+            returned={currentBook()?.back_timestamp ?? undefined}
             onClick={() => console.log('')}
           />
         </Section>
@@ -74,6 +76,8 @@ export const Profile = (props: ProfileProps) => {
               {(book) => (
                 <Card
                   {...book.book}
+                  taken={book.get_timestamp}
+                  returned={book.back_timestamp ?? undefined}
                   onClick={() => {
                     console.log('')
                   }}
