@@ -1,1 +1,1 @@
-export { takeBookMutation, returnBookMutation } from './model'
+export { takeBookMutation, returnBookMutation, $$takeBook } from './model'

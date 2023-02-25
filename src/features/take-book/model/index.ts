@@ -1,2 +1,2 @@
 export { takeBookMutation, returnBookMutation } from './query'
-import './model'
+export { $$takeBook } from './model'

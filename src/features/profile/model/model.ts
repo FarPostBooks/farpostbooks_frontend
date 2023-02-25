@@ -11,6 +11,7 @@ export const profileModel = () => {
 
   const loaded = sample({
     clock: getUserBooksQuery.finished.success,
+    filter: (response) => response.result.books.length > 0,
     fn: () => null,
   })
 
@@ -32,6 +33,8 @@ export const profileModel = () => {
     target: load,
   })
 
+  $userBooks.reset(reload)
+
   sample({
     clock: willLoad,
     source: $$session.$telegramId,
@@ -42,7 +45,9 @@ export const profileModel = () => {
 
   sample({
     clock: getUserBooksQuery.$data,
-    fn: (data) => data?.books ?? [],
+    source: $userBooks,
+    fn: (userBooks, data) =>
+      data?.books ? [...userBooks, ...data.books] : [...userBooks],
     target: $userBooks,
   })
 

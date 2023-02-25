@@ -1,22 +1,18 @@
-import { createEvent, createStore, sample } from 'effector'
+import { combine, createEvent, createStore, sample } from 'effector'
 import { createGate } from 'effector-solid'
 import { debug } from 'patronum'
 import { returnBookMutation, takeBookMutation } from '@/features/take-book'
 import { openBookQuery, getBooksQuery } from '@/entities/book'
-import { IBooks } from '@/shared'
+import { IBook, IBooks } from '@/shared'
 import { createPaginationControls } from '@/shared/lib'
 
 export const mainModel = () => {
   const gate = createGate()
 
-  const openBook = createEvent<{ isbn: number }>()
-  const closeBook = createEvent()
-  const takeBook = createEvent<{ isbn: number }>()
-  const returnBook = createEvent()
-
   const willLoad = createEvent<{ offset: number; limit: number }>()
   const loaded = sample({
     clock: getBooksQuery.finished.success,
+    filter: (response) => response.result.length > 0,
     fn: () => null,
   })
 
@@ -26,8 +22,15 @@ export const mainModel = () => {
     loadAction: willLoad,
   })
 
-  const $opened = createStore(false)
+  const searchChanged = createEvent<string>()
+
   const $books = createStore<IBooks>([])
+  const $search = createStore('')
+  const $filteredBooks = combine($books, $search, (books, search) =>
+    books.filter((book) =>
+      book.name.toLowerCase().includes(search.toLowerCase())
+    )
+  )
 
   sample({
     clock: gate.open,
@@ -48,50 +51,32 @@ export const mainModel = () => {
   })
 
   sample({
-    clock: openBook,
-    fn: ({ isbn }) => isbn,
+    clock: searchChanged,
+    target: $search,
+  })
+
+  sample({
+    clock: [
+      takeBookMutation.finished.success,
+      returnBookMutation.finished.success,
+    ],
+    source: openBookQuery.$data,
+    filter: Boolean,
+    fn: (book: IBook) => book.id,
     target: openBookQuery.start,
   })
 
-  sample({
-    clock: closeBook,
-    fn: () => false,
-    target: $opened,
-  })
-
-  sample({
-    clock: openBookQuery.finished.success,
-    fn: () => true,
-    target: $opened,
-  })
-
-  sample({
-    clock: takeBook,
-    target: takeBookMutation.start,
-  })
-
-  sample({
-    clock: returnBook,
-    fn: () => null,
-    target: returnBookMutation.start,
-  })
-
   debug({
-    takeBook,
-    returnBook,
     takeFinished: takeBookMutation.finished.failure,
     returnFinished: returnBookMutation.finished.failure,
   })
 
   return {
     gate,
-    openBook,
-    closeBook,
-    $opened,
     $books,
     loadMore: load,
-    takeBook,
-    returnBook,
+    searchChanged,
+    $filteredBooks,
   }
 }
 

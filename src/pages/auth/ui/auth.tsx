@@ -1,3 +1,4 @@
+import { getBotName } from '@/shared/config'
 import { FlexBox, Headbar, TelegramLoginWidget } from '@/shared/ui'
 import { $$authorization } from '../model'
 
@@ -13,7 +14,7 @@ export const Auth = () => {
     >
       <Headbar title="Библиотека Farpost" />
       <TelegramLoginWidget
-        botName="fb_auth_bot"
+        botName={getBotName()}
         buttonSize="large"
         dataOnAuth={$$authorization.onAuthComplete}
       />
