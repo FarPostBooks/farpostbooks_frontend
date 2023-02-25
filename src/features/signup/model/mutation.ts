@@ -11,7 +11,7 @@ export const createUserMutation = createJsonMutation({
     user: ISignupUser
   }>(),
   request: {
-    url: combineUrl('users'),
+    url: combineUrl('users/'),
     method: 'POST',
     body: ({ telegram, user }) => ({
       user: { ...user, name: `${user.name} ${user.surname}` },
