@@ -1,4 +1,4 @@
-import { Show } from 'solid-js'
+import { createMemo, Show } from 'solid-js'
 import { combineStatic, IBookCompact } from '@/shared'
 import { FlexBox, Header, Image, Paragraph } from '@/shared/ui'
 import s from './s.module.sass'
@@ -10,6 +10,23 @@ export type CardProps = IBookCompact & {
 }
 
 export const Card = (props: CardProps) => {
+  const takenDateTime = createMemo(() => {
+    if (!props.taken) return undefined
+    const dateTime = new Date(props.taken)
+
+    return `${dateTime.toLocaleDateString(
+      'ru-Ru'
+    )} ${dateTime.toLocaleTimeString('ru-Ru')}`
+  })
+  const returnedDateTime = createMemo(() => {
+    if (!props.returned) return undefined
+    const dateTime = new Date(props.returned)
+
+    return `${dateTime.toLocaleDateString(
+      'ru-Ru'
+    )} ${dateTime.toLocaleTimeString('ru-Ru')}`
+  })
+
   return (
     <div classList={{ [s.bookCard]: true }} onClick={() => props.onClick()}>
       <Image
@@ -30,7 +47,7 @@ export const Card = (props: CardProps) => {
         <Header variant="h4" text="ISBN:" />
         <Paragraph>{`${props.id}`}</Paragraph>
       </FlexBox>
-      <Show when={props.taken}>
+      <Show when={takenDateTime()}>
         <FlexBox
           direction="toright"
           wrap="nowrap"
@@ -41,10 +58,10 @@ export const Card = (props: CardProps) => {
           justifyContent="center"
         >
           <Header variant="h4" text="Взята:" />
-          <Paragraph>{`${props.taken}`}</Paragraph>
+          <Paragraph>{`${takenDateTime()}`}</Paragraph>
         </FlexBox>
       </Show>
-      <Show when={props.returned}>
+      <Show when={returnedDateTime()}>
         <FlexBox
           direction="toright"
           wrap="nowrap"
@@ -55,7 +72,7 @@ export const Card = (props: CardProps) => {
           justifyContent="center"
         >
           <Header variant="h4" text="Возвращена:" />
-          <Paragraph>{`${props.returned}`}</Paragraph>
+          <Paragraph>{`${returnedDateTime()}`}</Paragraph>
         </FlexBox>
       </Show>
     </div>
