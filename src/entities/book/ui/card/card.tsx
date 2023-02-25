@@ -25,7 +25,7 @@ export const Card = (props: CardProps) => {
       <Image
         src={combineStatic(props.image)}
         alt={props.name + ' обложка'}
-        variant={'compact'}
+        variant={'filling'}
       />
       <Header variant="h3" text={props.name} />
       <FlexBox
