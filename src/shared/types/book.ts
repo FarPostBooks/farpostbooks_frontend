@@ -14,6 +14,8 @@ export const BookUsabiliyStamp = Record({
   back_timestamp: String.Or(Null),
 })
 
+export const TakesHistory = Array(BookUsabiliyStamp)
+
 export const Book = BookCompact.extend({
   description: String,
   author: String,
@@ -27,3 +29,4 @@ export const Books = Array(BookCompact)
 export type IBookCompact = Static<typeof BookCompact>
 export type IBooks = Static<typeof Books>
 export type IBook = Static<typeof Book>
+export type ITakesHistory = Static<typeof TakesHistory>
