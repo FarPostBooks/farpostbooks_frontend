@@ -1,0 +1,1 @@
+export { $$openBook } from './model'

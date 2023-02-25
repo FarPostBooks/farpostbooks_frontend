@@ -1,11 +1,14 @@
 import { createQueryResource } from '@farfetched/solid'
 import { useUnit } from 'effector-solid'
 import { For, Show } from 'solid-js'
+import { BookModal } from '@/widgets/book-modal'
 import { PageTemplate } from '@/widgets/page-template'
+import { $$openBook } from '@/features/open-book'
 import { $$profile } from '@/features/profile'
-import { Card } from '@/entities/book'
+import { $$takeBook } from '@/features/take-book'
+import { Card, openBookQuery } from '@/entities/book'
 import { getMeQuery } from '@/entities/me'
-import { IBookCompact } from '@/shared'
+import { IBook, IBookCompact } from '@/shared'
 import { intersect as intersectDirective } from '@/shared/lib'
 import { FlexBox, Headbar, Paragraph, Section } from '@/shared/ui'
 
@@ -26,10 +29,13 @@ export type ProfileProps = {
 }
 export const Profile = (props: ProfileProps) => {
   const [me] = createQueryResource(getMeQuery)
-  const { books, currentBook } = useUnit({
+  const { books, currentBook, opened } = useUnit({
     books: $$profile.$userBooks,
     currentBook: $$profile.$currentBook,
+    opened: $$openBook.$opened,
   })
+
+  const [openedBook] = createQueryResource(openBookQuery)
 
   return (
     <PageTemplate>
@@ -57,7 +63,9 @@ export const Profile = (props: ProfileProps) => {
             {...(currentBook()?.book as IBookCompact)}
             taken={currentBook()?.get_timestamp}
             returned={currentBook()?.back_timestamp ?? undefined}
-            onClick={() => console.log('')}
+            onClick={() =>
+              $$openBook.openBook({ isbn: currentBook()?.book.id as number })
+            }
           />
         </Section>
       </Show>
@@ -79,7 +87,7 @@ export const Profile = (props: ProfileProps) => {
                   taken={book.get_timestamp}
                   returned={book.back_timestamp ?? undefined}
                   onClick={() => {
-                    console.log('')
+                    $$openBook.openBook({ isbn: book.book.id })
                   }}
                 />
               )}
@@ -88,6 +96,17 @@ export const Profile = (props: ProfileProps) => {
           </FlexBox>
         </Show>
       </Section>
+
+      <BookModal
+        bookOpened={opened()}
+        closeBook={$$openBook.closeBook}
+        currentBook={openedBook() as IBook}
+        currentUserBook={currentBook()?.book.id as number}
+        takeBook={() =>
+          $$takeBook.takeBook({ isbn: openedBook()?.id as number })
+        }
+        returnBook={$$takeBook.returnBook}
+      />
     </PageTemplate>
   )
 }

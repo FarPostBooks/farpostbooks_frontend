@@ -29,7 +29,6 @@ export const App = () => {
   const telegramData = useUnit($$authorization.$authorizationData)
   const authChecking = useUnit(getMeQuery.$pending)
   const authPassed = useUnit(getMeQuery.$succeeded)
-  // const hasAdminRights = useUnit($$session.$admin)
 
   return (
     <>

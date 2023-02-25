@@ -9,11 +9,6 @@ import { createPaginationControls } from '@/shared/lib'
 export const mainModel = () => {
   const gate = createGate()
 
-  const openBook = createEvent<{ isbn: number }>()
-  const closeBook = createEvent()
-  const takeBook = createEvent<{ isbn: number }>()
-  const returnBook = createEvent()
-
   const willLoad = createEvent<{ offset: number; limit: number }>()
   const loaded = sample({
     clock: getBooksQuery.finished.success,
@@ -29,7 +24,6 @@ export const mainModel = () => {
 
   const searchChanged = createEvent<string>()
 
-  const $opened = createStore(false)
   const $books = createStore<IBooks>([])
   const $search = createStore('')
   const $filteredBooks = combine($books, $search, (books, search) =>
@@ -57,35 +51,6 @@ export const mainModel = () => {
   })
 
   sample({
-    clock: openBook,
-    fn: ({ isbn }) => isbn,
-    target: openBookQuery.start,
-  })
-
-  sample({
-    clock: closeBook,
-    fn: () => false,
-    target: $opened,
-  })
-
-  sample({
-    clock: openBookQuery.finished.success,
-    fn: () => true,
-    target: $opened,
-  })
-
-  sample({
-    clock: takeBook,
-    target: takeBookMutation.start,
-  })
-
-  sample({
-    clock: returnBook,
-    fn: () => null,
-    target: returnBookMutation.start,
-  })
-
-  sample({
     clock: searchChanged,
     target: $search,
   })
@@ -102,21 +67,14 @@ export const mainModel = () => {
   })
 
   debug({
-    takeBook,
-    returnBook,
     takeFinished: takeBookMutation.finished.failure,
     returnFinished: returnBookMutation.finished.failure,
   })
 
   return {
     gate,
-    openBook,
-    closeBook,
-    $opened,
     $books,
     loadMore: load,
-    takeBook,
-    returnBook,
     searchChanged,
     $filteredBooks,
   }
