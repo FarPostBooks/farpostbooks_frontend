@@ -26,7 +26,7 @@ export const openBookQuery = createAuthorizedQuery<number, IBook>({
 })
 
 export const addBookMutation = createAuthorizedMutation<number, IBook>({
-  url: (isbn) => combineUrl(`books/${isbn}`),
+  url: (isbn) => combineUrl(`books/${isbn}/`),
   contract: Book,
   method: 'POST',
 })

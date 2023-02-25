@@ -8,7 +8,7 @@
     "prepare": "husky install",
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview", 
+    "preview": "vite preview",
     "lint": "eslint",
     "format": "prettier",
     "storybook": "storybook dev -p 6006"
@@ -37,6 +37,7 @@
     "eslint-plugin-solid": "^0.9.4",
     "generator-fsd": "^0.0.0",
     "husky": "^8.0.3",
+    "netlify-cli": "^13.0.0",
     "prettier": "^2.8.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
