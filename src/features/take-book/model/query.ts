@@ -6,7 +6,7 @@ export const takeBookMutation = createAuthorizedMutation<
   { isbn: number },
   null
 >({
-  url: ({ isbn }) => combineUrl(`users/me/books/${isbn}`),
+  url: ({ isbn }) => combineUrl(`users/me/books/${isbn}/`),
   contract: Null,
   method: 'POST',
 })
