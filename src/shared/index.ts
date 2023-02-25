@@ -6,6 +6,7 @@ export type {
   IUserBook,
   IBook,
   IBooks,
+  ITakesHistory,
   IBookCompact,
 } from './types'
 export { User, UserBook, Book, Books, UserBooks } from './types'

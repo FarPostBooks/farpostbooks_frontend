@@ -1,5 +1,6 @@
 import { createMemo, Show } from 'solid-js'
 import { combineStatic, IBookCompact } from '@/shared'
+import { toLocaleDateTime } from '@/shared/lib'
 import { FlexBox, Header, Image, Paragraph } from '@/shared/ui'
 import s from './s.module.sass'
 
@@ -12,19 +13,11 @@ export type CardProps = IBookCompact & {
 export const Card = (props: CardProps) => {
   const takenDateTime = createMemo(() => {
     if (!props.taken) return undefined
-    const dateTime = new Date(props.taken)
-
-    return `${dateTime.toLocaleDateString(
-      'ru-Ru'
-    )} ${dateTime.toLocaleTimeString('ru-Ru')}`
+    return toLocaleDateTime(props.taken)
   })
   const returnedDateTime = createMemo(() => {
     if (!props.returned) return undefined
-    const dateTime = new Date(props.returned)
-
-    return `${dateTime.toLocaleDateString(
-      'ru-Ru'
-    )} ${dateTime.toLocaleTimeString('ru-Ru')}`
+    return toLocaleDateTime(props.returned)
   })
 
   return (
@@ -32,7 +25,7 @@ export const Card = (props: CardProps) => {
       <Image
         src={combineStatic(props.image)}
         alt={props.name + ' обложка'}
-        variant={'compact'}
+        variant={'filling'}
       />
       <Header variant="h3" text={props.name} />
       <FlexBox

@@ -1,7 +1,7 @@
 import { children, createEffect, JSXElement, Show } from 'solid-js'
-import { combineStatic } from '@/shared'
+import { combineStatic, IBook } from '@/shared'
 import { Button, FlexBox, Header, Image, Paragraph, Section } from '@/shared/ui'
-import { IBook } from '../../model'
+import { TakesHistory } from '../takes-history'
 import s from './s.module.sass'
 
 export type ModalProps = IBook & {
@@ -57,6 +57,11 @@ export const Modal = (props: ModalProps) => {
             <Section name="Описание:" headerVariant="h3">
               <Paragraph>{props.description}</Paragraph>
             </Section>
+            <Show when={props.user_books?.length}>
+              <Section name="История:" headerVariant="h3">
+                <TakesHistory books={props.user_books ?? []} />
+              </Section>
+            </Show>
           </FlexBox>
         </div>
       </div>
