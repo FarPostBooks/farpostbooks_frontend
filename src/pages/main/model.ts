@@ -17,7 +17,7 @@ export const mainModel = () => {
   })
 
   const { load, reload } = createPaginationControls({
-    limit: 5,
+    limit: 10,
     updateParamsClock: loaded,
     loadAction: willLoad,
   })

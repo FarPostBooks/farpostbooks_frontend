@@ -18,7 +18,7 @@ export const profileModel = () => {
   const willLoad = createEvent<{ offset: number; limit: number }>()
 
   const { load, reload } = createPaginationControls({
-    limit: 5,
+    limit: 10,
     updateParamsClock: loaded,
     loadAction: willLoad,
   })

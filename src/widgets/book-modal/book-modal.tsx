@@ -1,4 +1,4 @@
-import { Switch, Match } from 'solid-js'
+import { Switch, Match, Show, createMemo, createEffect } from 'solid-js'
 import { Portal } from 'solid-js/web'
 import { Modal } from '@/entities/book'
 import { IBook } from '@/shared'
@@ -12,58 +12,64 @@ export type BookModalProps = {
   returnBook: () => void
 }
 export const BookModal = (props: BookModalProps) => {
+  const opened = createMemo(() => props.currentBook && props.bookOpened)
+
+  createEffect(() => {
+    if (opened()) {
+      document.body.style.setProperty('overflow', 'hidden')
+    } else {
+      document.body.style.setProperty('overflow', 'auto')
+    }
+  })
+
   return (
-    <Portal>
-      <Modal
-        {...(props.currentBook as IBook)}
-        opened={props.currentBook && props.bookOpened}
-        onBack={props.closeBook}
-        actionElement={
-          <Switch>
-            <Match
-              when={
-                !props.currentUserBook &&
-                props.currentBook?.user_books?.at(0) &&
-                !props.currentBook?.user_books?.at(0)?.back_timestamp
-              }
-            >
-              <ContrastSign
-                variant="warning"
-                text="Эту книгу уже кто-то взял!"
-              />
-            </Match>
-            <Match
-              when={
-                props.currentUserBook &&
-                props.currentUserBook !== props.currentBook?.id
-              }
-            >
-              <ContrastSign variant="warning" text="Вы уже взяли книгу!" />
-            </Match>
-            <Match when={props.currentUserBook !== props.currentBook?.id}>
-              <Button
-                variant="common"
-                text="Взять"
-                onClick={
-                  props.takeBook
-                  // $$main.takeBook({
-                  //   isbn: (currentBook() as IBook).id,
-                  // })
+    <Show when={opened()}>
+      <Portal>
+        <Modal
+          {...(props.currentBook as IBook)}
+          onBack={props.closeBook}
+          actionElement={
+            <Switch>
+              <Match
+                when={
+                  !props.currentUserBook &&
+                  props.currentBook?.user_books?.at(0) &&
+                  !props.currentBook?.user_books?.at(0)?.back_timestamp
                 }
-                filling="fill"
-              />
-            </Match>
-            <Match when={props.currentUserBook === props.currentBook?.id}>
-              <Button
-                variant="common"
-                text="Вернуть"
-                onClick={props.returnBook}
-                filling="fill"
-              />
-            </Match>
-          </Switch>
-        }
-      />
-    </Portal>
+              >
+                <ContrastSign
+                  variant="warning"
+                  text="Эту книгу уже кто-то взял!"
+                />
+              </Match>
+              <Match
+                when={
+                  props.currentUserBook &&
+                  props.currentUserBook !== props.currentBook?.id
+                }
+              >
+                <ContrastSign variant="warning" text="Вы уже взяли книгу!" />
+              </Match>
+              <Match when={props.currentUserBook !== props.currentBook?.id}>
+                <Button
+                  variant="common"
+                  text="Взять"
+                  onClick={props.takeBook}
+                  filling="fill"
+                />
+              </Match>
+              <Match when={props.currentUserBook === props.currentBook?.id}>
+                <Button
+                  variant="common"
+                  text="Вернуть"
+                  onClick={props.returnBook}
+                  filling="fill"
+                />
+              </Match>
+            </Switch>
+          }
+        />
+      </Portal>
+    </Show>
   )
 }
