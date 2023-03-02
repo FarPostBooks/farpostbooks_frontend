@@ -14,20 +14,16 @@ import { Main, mainRoute } from '@/pages/main'
 import { Profile, profileRoute } from '@/pages/profile'
 import { Signup, signupRoute } from '@/pages/signup'
 import { NotificationManager } from '@/widgets/notification-manager'
-import { getMeQuery } from '@/entities/me/query'
 import { $$session } from '@/entities/session'
 import { Protected } from '@/shared/lib'
 import { TelegramLoginWidgetData } from '@/shared/ui'
-import '@/features/profile'
-import '@/processes/book-borrowing'
 
 export const App = () => {
   useGate($$session.TokenGate)
-  useGate($$authorization.AuthorizationGate)
-
   const telegramData = useUnit($$authorization.$authorizationData)
-  const authChecking = useUnit(getMeQuery.$pending)
-  const authPassed = useUnit(getMeQuery.$succeeded)
+  const ready = useUnit($$session.$tokenReady)
+  const authPassed = useUnit($$session.$token)
+  const admin = useUnit($$session.$admin)
 
   return (
     <>
@@ -35,9 +31,9 @@ export const App = () => {
         route={mainRoute}
         view={() => (
           <Protected
-            checking={authChecking()}
+            checking={!ready()}
             redirect={redirectToAuthorization}
-            hasAccess={authPassed()}
+            hasAccess={!!authPassed()}
           >
             <Main
               redirectToAdmin={redirectToAdmin}
@@ -50,7 +46,8 @@ export const App = () => {
         route={authRoute}
         view={() => (
           <Protected
-            checking={authChecking()}
+            // checking={authChecking()}
+            checking={!ready()}
             redirect={redirectToMain}
             hasAccess={!authPassed()}
           >
@@ -74,8 +71,8 @@ export const App = () => {
         route={profileRoute}
         view={() => (
           <Protected
-            checking={authChecking()}
-            hasAccess={authPassed()}
+            checking={!ready}
+            hasAccess={!!authPassed()}
             redirect={redirectToAuthorization}
           >
             <Profile onBack={redirectToMain} onLogout={$$session.removeToken} />
@@ -87,8 +84,8 @@ export const App = () => {
         view={() => {
           return (
             <Protected
-              checking={authChecking()}
-              hasAccess={authPassed()}
+              checking={!ready()}
+              hasAccess={!!authPassed() && admin()}
               redirect={redirectToAuthorization}
             >
               <AdminPanel onBack={redirectToMain} />

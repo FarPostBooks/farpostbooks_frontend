@@ -1,5 +1,5 @@
 import { createQueryResource } from '@farfetched/solid'
-import { useUnit } from 'effector-solid'
+import { useGate, useUnit } from 'effector-solid'
 import { For, Show } from 'solid-js'
 import { BookModal } from '@/widgets/book-modal'
 import { PageTemplate } from '@/widgets/page-template'
@@ -11,6 +11,7 @@ import { getMeQuery } from '@/entities/me'
 import { IBook, IBookCompact } from '@/shared'
 import { intersect as intersectDirective } from '@/shared/lib'
 import { FlexBox, Headbar, Paragraph, Section } from '@/shared/ui'
+import { profileGate } from '../model'
 
 const intersect = intersectDirective
 
@@ -28,6 +29,8 @@ export type ProfileProps = {
   onLogout: () => void
 }
 export const Profile = (props: ProfileProps) => {
+  useGate(profileGate)
+
   const [me] = createQueryResource(getMeQuery)
   const { books, currentBook, opened } = useUnit({
     books: $$profile.$userBooks,

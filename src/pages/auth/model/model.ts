@@ -6,7 +6,7 @@ import { TelegramLoginWidgetData } from '@/shared/ui'
 import { getTokenQuery } from './query'
 
 export const authtorizationModel = () => {
-  const AuthorizationGate = createGate()
+  const AuthorizedGate = createGate()
 
   const onAuthComplete = createEvent<TelegramLoginWidgetData>()
 
@@ -15,12 +15,8 @@ export const authtorizationModel = () => {
   const $authorizationData = createStore<TelegramLoginWidgetData | null>(null)
 
   sample({
-    clock: [
-      AuthorizationGate.open,
-      $$session.removeToken,
-      $$session.updateToken,
-      getTokenQuery.finished.success,
-    ],
+    clock: AuthorizedGate.open,
+
     fn: () => null,
     target: getMeQuery.start,
   })
@@ -50,7 +46,7 @@ export const authtorizationModel = () => {
     redirectToSignup,
     onAuthComplete,
     $authorizationData,
-    AuthorizationGate,
+    AuthorizedGate,
   }
 }
 

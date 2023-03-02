@@ -31,6 +31,11 @@ export const profileModel = () => {
   $userBooks.reset(reload)
 
   sample({
+    clock: getMeQuery.finished.success,
+    target: reload,
+  })
+
+  sample({
     clock: willLoad,
     source: getMeQuery.$data,
     filter: Boolean,
@@ -57,7 +62,6 @@ export const profileModel = () => {
     load,
     willLoad,
   })
-
   return { load, reload, $currentBook, $userBooks }
 }
 
