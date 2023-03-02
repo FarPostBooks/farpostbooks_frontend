@@ -5,4 +5,4 @@ export {
   openBookQuery,
   getUserBooksQuery,
 } from './model'
-export { Card, Modal } from './ui'
+export { Card, BookPage } from './ui'

@@ -1,11 +1,11 @@
 import { useUnit } from 'effector-solid'
 import { createFormControl } from 'solid-forms'
 import { createEffect } from 'solid-js'
-import { Portal } from 'solid-js/web'
 import { PageTemplate } from '@/widgets/page-template'
-import { checkBookQuery, IBook, Modal } from '@/entities/book'
+import { BookPage, checkBookQuery } from '@/entities/book'
 import { $$session } from '@/entities/session'
-import { Button, Form, Headbar, Input } from '@/shared/ui'
+import { IBook } from '@/shared'
+import { Button, Form, Headbar, Input, Modal } from '@/shared/ui'
 import { $$adminPanel } from '../model'
 
 export type AdminPanelProps = {
@@ -65,10 +65,9 @@ export const AdminPanel = (props: AdminPanelProps) => {
         />
         <Button text="Добавить" filling="fill" variant="common" />
       </Form>
-      <Portal>
-        <Modal
+      <Modal opened={!!bookPreview() && modalOpened() && !bookPending()}>
+        <BookPage
           {...(bookPreview() as IBook)}
-          opened={!!bookPreview() && modalOpened() && !bookPending()}
           onBack={$$adminPanel.closeClicked}
           actionElement={
             <Button
@@ -81,7 +80,7 @@ export const AdminPanel = (props: AdminPanelProps) => {
             />
           }
         />
-      </Portal>
+      </Modal>
     </PageTemplate>
   )
 }
