@@ -19,6 +19,8 @@ export const openBookModel = () => {
     target: $opened,
   })
 
+  closeBook.watch(() => console.log('closed'))
+
   sample({
     clock: openBookQuery.finished.success,
     fn: () => true,
