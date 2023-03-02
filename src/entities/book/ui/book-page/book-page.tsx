@@ -4,11 +4,11 @@ import { Button, FlexBox, Header, Image, Paragraph, Section } from '@/shared/ui'
 import { TakesHistory } from '../takes-history'
 import s from './s.module.sass'
 
-export type ModalProps = IBook & {
+export type BookPageProps = IBook & {
   actionElement: JSXElement
   onBack: () => void
 }
-export const Modal = (props: ModalProps) => {
+export const BookPage = (props: BookPageProps) => {
   const c = children(() => props.actionElement)
 
   const popstateHandler = (url: string) => {
