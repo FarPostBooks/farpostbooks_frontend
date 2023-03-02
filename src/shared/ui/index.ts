@@ -8,6 +8,7 @@ export { Headbar } from './headbar'
 export { Form } from './form'
 export { Section } from './section'
 export { Modal } from './modal'
+export { Rating } from './rating'
 
 export type { TelegramLoginWidgetData } from './telegram-login-widget'
 export { TelegramLoginWidget } from './telegram-login-widget'

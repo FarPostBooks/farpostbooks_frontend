@@ -13,17 +13,20 @@ export const TakesHistory = (props: TakesHistoryProps) => {
       <tbody>
         <tr>
           <td>
-            <Header text="Имя" variant="h4" />
+            <Header text="Пользователь" variant="h4" />
           </td>
           <td>
-            <Header text="Взята" variant="h4" />
+            <Header text="Взял" variant="h4" />
           </td>
           <td>
-            <Header text="Возвращена" variant="h4" />
+            <Header text="Вернул" variant="h4" />
+          </td>
+          <td>
+            <Header text="Оценка" variant="h4" />
           </td>
         </tr>
 
-        <For each={props.books}>
+        <For each={props.books.reverse()}>
           {(take) => (
             <tr style={{ 'text-align': 'center', 'vertical-align': 'top' }}>
               <td>
@@ -36,8 +39,11 @@ export const TakesHistory = (props: TakesHistoryProps) => {
                 <Paragraph>
                   {take.back_timestamp
                     ? toLocaleDateTime(take.back_timestamp)
-                    : ''}
+                    : '-'}
                 </Paragraph>
+              </td>
+              <td>
+                <Paragraph>{take.rating ? `${take.rating}` : '-'}</Paragraph>
               </td>
             </tr>
           )}

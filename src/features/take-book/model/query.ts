@@ -11,9 +11,12 @@ export const takeBookMutation = createAuthorizedMutation<
   method: 'POST',
 })
 
-export const returnBookMutation = createAuthorizedMutation<null, null>({
+export const returnBookMutation = createAuthorizedMutation<
+  { rating: number },
+  null
+>({
   url: () => combineUrl('users/me/books'),
   contract: Null,
   method: 'PUT',
-  body: { rating: 5 },
+  body: (params) => ({ rating: params.rating }),
 })

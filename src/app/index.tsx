@@ -3,6 +3,7 @@ import { render } from 'solid-js/web'
 import { App } from './app'
 import { router } from './routing'
 import '@/processes/redirecting'
+import '@/processes/book-modals'
 
 render(
   () => (

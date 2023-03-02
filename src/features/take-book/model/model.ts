@@ -1,4 +1,4 @@
-import { createEvent, sample } from 'effector'
+import { createEvent, createStore, sample } from 'effector'
 import { $$notifications } from '@/entities/notification'
 import { IError } from '@/shared'
 import { returnBookMutation, takeBookMutation } from './query'
@@ -6,6 +6,10 @@ import { returnBookMutation, takeBookMutation } from './query'
 export const takeBookModel = () => {
   const takeBook = createEvent<{ isbn: number }>()
   const returnBook = createEvent()
+  const bookWillRated = createEvent()
+  const rateBook = createEvent<{ rating: number }>()
+
+  const $rateModalOpened = createStore(false)
 
   sample({
     clock: takeBookMutation.finished.success,
@@ -15,15 +19,15 @@ export const takeBookModel = () => {
 
   sample({
     clock: returnBookMutation.finished.success,
-    fn: () => ({ message: 'Книга успешно возвращена' }),
+    fn: (data) => ({
+      message: `Книга успешно возвращена! Ваша оценка: ${data.params.rating}`,
+    }),
     target: $$notifications.addNotification,
   })
 
   sample({
     clock: takeBookMutation.finished.failure,
     fn: (error) => ({ message: (error as IError).error.response.detail }),
-    // fn: (result) => ({ message: (result.error as IError).error.response.detail }),
-    // fn: () => ({ message: 'Что-то пошло не так' }),
     target: $$notifications.addNotification,
   })
   sample({
@@ -34,12 +38,32 @@ export const takeBookModel = () => {
   sample({
     clock: returnBook,
     fn: () => null,
+    target: bookWillRated,
+  })
+
+  sample({
+    clock: bookWillRated,
+    fn: () => true,
+    target: $rateModalOpened,
+  })
+
+  sample({
+    clock: rateBook,
     target: returnBookMutation.start,
+  })
+
+  sample({
+    clock: rateBook,
+    fn: () => false,
+    target: $rateModalOpened,
   })
 
   return {
     takeBook,
     returnBook,
+
+    rateBook,
+    $rateModalOpened,
   }
 }
 
