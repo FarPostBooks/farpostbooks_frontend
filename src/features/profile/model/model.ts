@@ -1,7 +1,7 @@
 import { createEvent, createStore, sample } from 'effector'
 import { debug } from 'patronum'
 import { getUserBooksQuery } from '@/entities/book'
-import { $$session } from '@/entities/session'
+import { getMeQuery } from '@/entities/me'
 import { IUserBook } from '@/shared'
 import { createPaginationControls } from '@/shared/lib'
 
@@ -24,11 +24,6 @@ export const profileModel = () => {
   })
 
   sample({
-    clock: $$session.telegramIdSetupCompleted,
-    target: reload,
-  })
-
-  sample({
     clock: reload,
     target: load,
   })
@@ -37,9 +32,9 @@ export const profileModel = () => {
 
   sample({
     clock: willLoad,
-    source: $$session.$telegramId,
+    source: getMeQuery.$data,
     filter: Boolean,
-    fn: (telegramId, { offset, limit }) => ({ telegramId, offset, limit }),
+    fn: (data, { offset, limit }) => ({ telegramId: data.id, offset, limit }),
     target: getUserBooksQuery.start,
   })
 

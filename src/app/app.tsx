@@ -23,7 +23,6 @@ import '@/processes/book-borrowing'
 
 export const App = () => {
   useGate($$session.TokenGate)
-  useGate($$session.TelegramIdGate)
   useGate($$authorization.AuthorizationGate)
 
   const telegramData = useUnit($$authorization.$authorizationData)
