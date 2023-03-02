@@ -7,5 +7,3 @@ export const getMeQuery = createAuthorizedQuery<null, IUser>({
   contract: User,
   method: 'GET',
 })
-
-// export const getMyBooks = createAuthorizedQuery<telegramId,
