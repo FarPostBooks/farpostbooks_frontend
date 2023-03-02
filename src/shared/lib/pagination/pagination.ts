@@ -10,7 +10,7 @@ export const createPaginationControls = ({
   loadAction: Event<{ offset: number; limit: number }>
 }) => {
   const $offset = createStore(0)
-  const $limit = createStore(limit ?? 5)
+  const $limit = createStore(limit ?? 10)
 
   const reload = createEvent()
   const load = createEvent()

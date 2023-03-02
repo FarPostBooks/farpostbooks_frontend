@@ -44,12 +44,7 @@ export const BookModal = (props: BookModalProps) => {
               <Button
                 variant="common"
                 text="Взять"
-                onClick={
-                  props.takeBook
-                  // $$main.takeBook({
-                  //   isbn: (currentBook() as IBook).id,
-                  // })
-                }
+                onClick={props.takeBook}
                 filling="fill"
               />
             </Match>
