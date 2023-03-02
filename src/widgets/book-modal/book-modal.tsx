@@ -3,6 +3,8 @@ import { BookPage } from '@/entities/book'
 import { IBook } from '@/shared'
 import { Button, ContrastSign } from '@/shared/ui'
 import { Modal } from '@/shared/ui/modal'
+// eslint-disable-next-line boundaries/element-types
+import { RatingModal } from '../rating-modal/rating-modal'
 export type BookModalProps = {
   currentBook?: IBook
   bookOpened: boolean
@@ -60,6 +62,8 @@ export const BookModal = (props: BookModalProps) => {
           </Switch>
         }
       />
+
+      <RatingModal />
     </Modal>
   )
 }

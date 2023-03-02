@@ -13,13 +13,16 @@ export const TakesHistory = (props: TakesHistoryProps) => {
       <tbody>
         <tr>
           <td>
-            <Header text="Имя" variant="h4" />
+            <Header text="Пользователь" variant="h4" />
           </td>
           <td>
-            <Header text="Взята" variant="h4" />
+            <Header text="Взял" variant="h4" />
           </td>
           <td>
-            <Header text="Возвращена" variant="h4" />
+            <Header text="Вернул" variant="h4" />
+          </td>
+          <td>
+            <Header text="Оценка" variant="h4" />
           </td>
         </tr>
 
@@ -38,6 +41,9 @@ export const TakesHistory = (props: TakesHistoryProps) => {
                     ? toLocaleDateTime(take.back_timestamp)
                     : ''}
                 </Paragraph>
+              </td>
+              <td>
+                <Paragraph>{take.rating ? `${take.rating}` : ''}</Paragraph>
               </td>
             </tr>
           )}

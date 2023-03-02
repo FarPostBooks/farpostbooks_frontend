@@ -12,6 +12,7 @@ export const BookUsabiliyStamp = Record({
   user: User,
   get_timestamp: String,
   back_timestamp: String.Or(Null),
+  rating: Number,
 })
 
 export const TakesHistory = Array(BookUsabiliyStamp)
