@@ -36,12 +36,6 @@ export const authtorizationModel = () => {
   })
 
   sample({
-    clock: onAuthComplete,
-    fn: (data) => data.id,
-    target: $$session.updateTelegramId,
-  })
-
-  sample({
     clock: getTokenQuery.finished.success,
     fn: (data) => data.result,
     target: $$session.updateToken,
