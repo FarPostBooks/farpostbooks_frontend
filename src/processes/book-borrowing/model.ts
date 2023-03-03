@@ -1,5 +1,4 @@
 import { sample } from 'effector'
-import { debug } from 'patronum'
 import { $$profile } from '@/features/profile'
 import { returnBookMutation, takeBookMutation } from '@/features/take-book'
 
@@ -10,5 +9,3 @@ sample({
   ],
   target: $$profile.reload,
 })
-
-debug({})
