@@ -1,6 +1,5 @@
 import { combine, createEvent, createStore, sample } from 'effector'
 import { createGate } from 'effector-solid'
-import { debug } from 'patronum'
 import { returnBookMutation, takeBookMutation } from '@/features/take-book'
 import { openBookQuery, getBooksQuery } from '@/entities/book'
 import { IBook, IBooks } from '@/shared'
@@ -64,11 +63,6 @@ export const mainModel = () => {
     filter: Boolean,
     fn: (book: IBook) => book.id,
     target: openBookQuery.start,
-  })
-
-  debug({
-    takeFinished: takeBookMutation.finished.failure,
-    returnFinished: returnBookMutation.finished.failure,
   })
 
   return {

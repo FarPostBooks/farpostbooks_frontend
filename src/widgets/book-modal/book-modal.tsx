@@ -25,18 +25,6 @@ export const BookModal = (props: BookModalProps) => {
           <Switch>
             <Match
               when={
-                !props.currentUserBook &&
-                props.currentBook?.user_books?.at(0) &&
-                !props.currentBook?.user_books?.at(0)?.back_timestamp
-              }
-            >
-              <ContrastSign
-                variant="warning"
-                text="Эту книгу уже кто-то взял!"
-              />
-            </Match>
-            <Match
-              when={
                 props.currentUserBook &&
                 props.currentUserBook !== props.currentBook?.id
               }
@@ -57,6 +45,17 @@ export const BookModal = (props: BookModalProps) => {
                 text="Вернуть"
                 onClick={props.returnBook}
                 filling="fill"
+              />
+            </Match>
+            <Match
+              when={
+                props.currentBook?.user_books?.at(0) &&
+                !props.currentBook?.user_books?.at(0)?.back_timestamp
+              }
+            >
+              <ContrastSign
+                variant="warning"
+                text="Эту книгу уже кто-то взял!"
               />
             </Match>
           </Switch>

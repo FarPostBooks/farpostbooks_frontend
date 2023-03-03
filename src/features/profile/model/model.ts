@@ -1,5 +1,4 @@
 import { createEvent, createStore, sample } from 'effector'
-import { debug } from 'patronum'
 import { getUserBooksQuery } from '@/entities/book'
 import { getMeQuery } from '@/entities/me'
 import { IUserBook } from '@/shared'
@@ -57,11 +56,6 @@ export const profileModel = () => {
     target: $currentBook,
   })
 
-  debug({
-    reload,
-    load,
-    willLoad,
-  })
   return { load, reload, $currentBook, $userBooks }
 }
 

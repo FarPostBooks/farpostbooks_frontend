@@ -53,7 +53,7 @@ export const takeBookModel = () => {
   })
 
   sample({
-    clock: rateBook,
+    clock: returnBookMutation.finished.finally,
     fn: () => false,
     target: $rateModalOpened,
   })

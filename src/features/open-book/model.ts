@@ -1,5 +1,4 @@
 import { createEvent, createStore, sample } from 'effector'
-import { debug } from 'patronum'
 import { openBookQuery } from '@/entities/book'
 
 export const openBookModel = () => {
@@ -19,8 +18,6 @@ export const openBookModel = () => {
     target: $opened,
   })
 
-  closeBook.watch(() => console.log('closed'))
-
   sample({
     clock: openBookQuery.finished.success,
     fn: () => true,
@@ -29,7 +26,5 @@ export const openBookModel = () => {
 
   return { openBook, closeBook, $opened }
 }
-
-debug({ openedBook: openBookQuery.$data })
 
 export const $$openBook = openBookModel()
