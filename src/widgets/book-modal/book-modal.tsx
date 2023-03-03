@@ -23,22 +23,6 @@ export const BookModal = (props: BookModalProps) => {
         onBack={props.closeBook}
         actionElement={
           <Switch>
-            <Match
-              when={
-                props.currentUserBook &&
-                props.currentUserBook !== props.currentBook?.id
-              }
-            >
-              <ContrastSign variant="warning" text="Вы уже взяли книгу!" />
-            </Match>
-            <Match when={props.currentUserBook !== props.currentBook?.id}>
-              <Button
-                variant="common"
-                text="Взять"
-                onClick={props.takeBook}
-                filling="fill"
-              />
-            </Match>
             <Match when={props.currentUserBook === props.currentBook?.id}>
               <Button
                 variant="common"
@@ -46,6 +30,15 @@ export const BookModal = (props: BookModalProps) => {
                 onClick={props.returnBook}
                 filling="fill"
               />
+            </Match>
+
+            <Match
+              when={
+                props.currentUserBook &&
+                props.currentUserBook !== props.currentBook?.id
+              }
+            >
+              <ContrastSign variant="warning" text="Вы уже взяли книгу!" />
             </Match>
             <Match
               when={
@@ -56,6 +49,15 @@ export const BookModal = (props: BookModalProps) => {
               <ContrastSign
                 variant="warning"
                 text="Эту книгу уже кто-то взял!"
+              />
+            </Match>
+
+            <Match when={props.currentUserBook !== props.currentBook?.id}>
+              <Button
+                variant="common"
+                text="Взять"
+                onClick={props.takeBook}
+                filling="fill"
               />
             </Match>
           </Switch>
